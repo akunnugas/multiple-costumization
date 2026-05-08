@@ -76,8 +76,6 @@ class Kernel extends HttpKernel
 
         'auth.home' => \Modules\Gate\Http\Middleware\AuthorizeHome::class,
         'auth.role' => \Modules\Gate\Http\Middleware\AuthorizeRole::class,
-        'guest.admission' => \Modules\Admission\Http\Middleware\RedirectIfAuthenticated::class,
-        'auth.admission' => \Modules\Admission\Http\Middleware\AuthorizeAdmission::class,
         'healthy.check' => \App\Http\Middleware\Healthz::class,
     ];
 

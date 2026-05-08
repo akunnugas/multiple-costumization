@@ -1,12 +1,5 @@
 {
     "Core": true,
     "Gate": true,
-    "Log": true,
-    "Litabmas": true,
-    "SPMI": true,
-    "DMS": true,
-    "PMB": true,
-    "Admission": true,
-    "HR": true,
-    "Kerjasama": true
+    "DMS": true
 }

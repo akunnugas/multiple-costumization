@@ -5,10 +5,6 @@
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@gitlab.sevima.com:sevima-platform/data-glosarium.git"
-        }
     ],
     "require": {
         "php": "^8.2",
@@ -22,17 +18,11 @@
         "laravel/tinker": "^2.8",
         "league/flysystem-aws-s3-v3": "^3.19",
         "livewire/livewire": "^3.1",
-        "maatwebsite/excel": "^3.1",
         "mhmiton/laravel-modules-livewire": "^2.1",
-        "mossadal/math-parser": "^1.3",
         "nwidart/laravel-modules": "^10.0",
-        "php-amqplib/php-amqplib": "^3.6",
-        "phpoffice/phpword": "^1.2",
         "sentry/sentry-laravel": "^4.5",
-        "sevima/sevima-glossary": "^1.4.6",
         "symfony/expression-language": "^7.0",
-        "symfony/http-foundation": "^6.4",
-        "vladimir-yuldashev/laravel-queue-rabbitmq": "^13.3"
+        "symfony/http-foundation": "^6.4"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

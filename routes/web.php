@@ -65,7 +65,6 @@ Route::middleware('healthy.check')->group(function () {
     });
 });
 
-
 // fallback route
 Route::fallback(function () {
     abort(404);
