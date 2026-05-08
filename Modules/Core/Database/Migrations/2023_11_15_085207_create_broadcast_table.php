@@ -54,7 +54,3 @@ return new class extends Migration
         SevimaSchema::dropIfExists('core.broadcast');
     }
 };
-);
-        SevimaSchema::dropIfExists('core.broadcast');
-    }
-};
