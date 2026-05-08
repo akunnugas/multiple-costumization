@@ -1,0 +1,41 @@
+.module-card {
+    border: 1px solid var(--qn-neutral-200);
+    box-shadow: 0 2px 4px 0 rgba(27, 28, 29, 0.04);
+
+    &:hover {
+        box-shadow: 0 3px 8px 0 rgba(27, 28, 29, 0.08);
+    }
+
+    .card__body {
+        gap: 0;
+        padding: 0.75rem;
+        display: block;
+    }
+
+    .module-card__icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        display: grid;
+        place-items: center;
+        background: var(--qn-neutral-200);
+        border-radius: 0.25rem;
+
+        img {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+    }
+
+    .module-card__label {
+        font-size: 0.875rem;
+        font-weight: 600;
+        line-height: 1.25rem;
+        color: var(--qn-neutral-800);
+        padding: 1rem 0 0.25rem 0;
+    }
+
+    .module-card__file-count {
+        font-size: 0.75rem;
+        color: var(--qn-neutral-600);
+    }
+}

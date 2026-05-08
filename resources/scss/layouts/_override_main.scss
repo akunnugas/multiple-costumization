@@ -1,0 +1,19 @@
+@import "../media";
+@import "../../../resources/scss/custom-utils.scss";
+
+@include media-up("md") {
+    .header__identity-title {
+        max-width: 252px !important;
+    }
+
+    .header__identity-logo {
+        display: flex;
+        align-items: center;
+        max-width: 3rem !important;
+        min-width: 3rem !important;
+    }
+
+    .header__identity {
+        gap: 1.5rem;
+    }
+}

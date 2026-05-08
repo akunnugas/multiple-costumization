@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'main' => 'Mitra',
+    'jenis_mitra' => 'Jenis Mitra',
+    'nama_mitra' => 'Nama Mitra',
+    'email' => 'Email',
+    'website' => 'Link Website',
+    'id' => 'ID Mitra',
+    'id_kriteria_mitra' => 'Kriteria Mitra',
+    'tingkat_mitra' => 'Lingkup Mitra',
+    'id_negara' => 'Negara',
+    'id_provinsi' => 'Provinsi',
+    'id_kota' => 'Kota / Kabupaten',
+    'id_kecamatan' => 'Kecamatan',
+    'id_jenis_dokumen' => 'Jenis Dokumen',
+    'kode_pos' => 'Kode POS',
+    'kode_mitra' => 'Nomor Surat Izin Usaha / Perguruan Tinggi',
+    'link_googlemap' => 'Link Google Map',
+    'npwp_mitra' => 'NPWP Mitra',
+    'telepon' => 'Nomor Telepon',
+    'alamat' => 'Alamat',
+    'tanggal_mulai_berlaku1' => 'Tanggal Awal Berlaku DD/MM/YYYY',
+    'tanggal_akhir_berlaku1' => 'Tanggal Akhir Berlaku DD/MM/YYYY',
+];

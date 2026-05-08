@@ -1,0 +1,11 @@
+{
+    "name": "Kerjasama",
+    "alias": "kerjasama",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Kerjasama\\Providers\\KerjasamaServiceProvider"
+    ],
+    "files": []
+}

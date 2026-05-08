@@ -1,4 +1,4 @@
 *
-!private/
 !public/
+!spmi-mutu-template/
 !.gitignore

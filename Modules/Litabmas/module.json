@@ -1,0 +1,11 @@
+{
+    "name": "Litabmas",
+    "alias": "litabmas",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Litabmas\\Providers\\LitabmasServiceProvider"
+    ],
+    "files": []
+}

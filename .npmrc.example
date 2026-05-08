@@ -1,0 +1,2 @@
+@quantum:registry=http://gitlab.sevima.com:8888/api/v4/projects/339/packages/npm/
+//gitlab.sevima.com:8888/api/v4/projects/339/packages/npm/:_authToken=YOUR_TOKEN

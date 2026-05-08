@@ -1,0 +1,163 @@
+@import "../../public/scss/media";
+
+/** Custom Utilities Start **/
+// foreach 0px sampai 20px (perkalian 4)
+@for $i from 0 through 5 {
+    // padding
+    .util_p-#{$i * 4} {padding: #{$i * 4}px!important}
+    .util_pt-#{$i * 4} {padding-top: #{$i * 4}px!important}
+    .util_pr-#{$i * 4} {padding-right: #{$i * 4}px!important}
+    .util_pb-#{$i * 4} {padding-bottom: #{$i * 4}px!important}
+    .util_pl-#{$i * 4} {padding-left: #{$i * 4}px!important}
+
+    // margin
+    .util_m-#{$i * 4} {margin: #{$i * 4}px!important}
+    .util_mt-#{$i * 4} {margin-top: #{$i * 4}px!important}
+    .util_mr-#{$i * 4} {margin-right: #{$i * 4}px!important}
+    .util_mb-#{$i * 4} {margin-bottom: #{$i * 4}px!important}
+    .util_ml-#{$i * 4} {margin-left: #{$i * 4}px!important}
+}
+
+// font size kelipatan 2px dalam rem
+@for $i from 1 through 10 {
+    .util_fs-#{$i * 2}px {font-size: #{$i * 2}px!important}
+}
+
+// foreach gap 1rem sampai 5rem
+@for $i from 1 through 5 {
+    .util_gap-#{$i} {gap: #{$i}rem!important}
+}
+
+// gap 0px sampai 20px (perkalian 4)
+@for $i from 1 through 5 {
+    .util_gap-#{$i * 4}px {gap: #{$i * 4}px!important}
+}
+
+.util_color-default {color: #9aa4b2 !important;}
+
+.card__body .card__content_title {font-size: 18px !important; margin-top: 15px;}
+.card__body .card__content {
+    margin-top: 30px !important;
+    label {font-size: 12px !important;color: #363636 !important;}
+}
+
+.linebreak
+{
+    color: grey;
+    border-bottom-style: solid;
+    border-bottom-width: 0.5px;
+    margin-top: 15px;
+}
+
+.util_mt-40 {margin-top: 40px !important;}
+.util_mt-15 {margin-top: 15px !important;}
+.util_mt-10 {margin-top: 10px !important;}
+
+.row-data__name_custom {width: 50% !important; color: black !important;}
+.row-data__value_custom {
+    position: relative;
+    padding-left: .5rem;
+    width: 50% !important;
+    color: rgb(83, 83, 83) !important;
+}
+
+.util_p-0 {padding:0!important}
+.util_px-40 {padding-left:40px!important;padding-right:40px!important}
+.util_m-0 {margin:0!important}
+.util_mb-12 {margin-bottom:12px!important}
+.util_mb-16 {margin-bottom:16px!important}
+
+.util_d-inline{display:inline!important}
+.util_d-inline-block{display:inline-block!important}
+.util_d-block{display:block!important}
+.util_d-grid{display:grid!important}
+.util_d-table{display:table!important}
+.util_d-table-row{display:table-row!important}
+.util_d-table-cell{display:table-cell!important}
+.util_d-flex{display:flex!important}
+.util_d-inline-flex{display:inline-flex!important}
+.util_d-none{display:none!important}
+
+.util_w-100 {width:100%!important}
+.util_w-75 {width:75%!important}
+.util_w-70 {width:70%!important}
+.util_w-60 {width:60%!important}
+.util_w-50 {width:50%!important}
+.util_w-45 {width:45%!important}
+.util_w-35 {width:35%!important}
+.util_w-10 {width:10%!important}
+
+.util_h-fit-content {height:fit-content!important}
+
+.util_text-center {text-align:center!important}
+.util_text-left {text-align:left!important}
+.util_text-right {text-align:right!important}
+
+.util_flex-center {justify-content:center!important}
+.util_flex-end {justify-content:end!important}
+.util_flex-center-vertical {align-items:center!important}
+.util_flex-start {justify-content:flex-start!important}
+.util_flex-between {justify-content:space-between!important}
+.util_flex-middle {align-items:center!important}
+
+.util_flex-column {flex-direction:column!important}
+
+.util_cursor-pointer {cursor:pointer!important}
+
+.util_grid_row_gap-0 {grid-row-gap:0!important}
+.util_grid_row_gap-2 {grid-row-gap:2px!important}
+.util_grid_row_gap-4 {grid-row-gap:4px!important}
+
+// Utk menggunakan function media-up ini harus mengimport _media.scss di core nya
+@include media-up('sm') { // 48rem -> 768px
+    .util_d-sm-inline{display:inline!important}
+    .util_d-sm-inline-block{display:inline-block!important}
+    .util_d-sm-block{display:block!important}
+    .util_d-sm-grid{display:grid!important}
+    .util_d-sm-table{display:table!important}
+    .util_d-sm-table-row{display:table-row!important}
+    .util_d-sm-table-cell{display:table-cell!important}
+    .util_d-sm-flex{display:flex!important}
+    .util_d-sm-inline-flex{display:inline-flex!important}
+    .util_d-sm-none{display:none!important}
+}
+
+@include media-up('md') { // 80rem -> 1280px
+    .util_d-md-inline{display:inline!important}
+    .util_d-md-inline-block{display:inline-block!important}
+    .util_d-md-block{display:block!important}
+    .util_d-md-grid{display:grid!important}
+    .util_d-md-table{display:table!important}
+    .util_d-md-table-row{display:table-row!important}
+    .util_d-md-table-cell{display:table-cell!important}
+    .util_d-md-flex{display:flex!important}
+    .util_d-md-inline-flex{display:inline-flex!important}
+    .util_d-md-none{display:none!important}
+}
+
+@include media-up('lg') { // 83.5rem -> 1336px
+    .util_d-lg-inline{display:inline!important}
+    .util_d-lg-inline-block{display:inline-block!important}
+    .util_d-lg-block{display:block!important}
+    .util_d-lg-grid{display:grid!important}
+    .util_d-lg-table{display:table!important}
+    .util_d-lg-table-row{display:table-row!important}
+    .util_d-lg-table-cell{display:table-cell!important}
+    .util_d-lg-flex{display:flex!important}
+    .util_d-lg-inline-flex{display:inline-flex!important}
+    .util_d-lg-none{display:none!important}
+}
+
+@include media-up('xl') { // 90rem -> 1440px
+    .util_d-xl-inline{display:inline!important}
+    .util_d-xl-inline-block{display:inline-block!important}
+    .util_d-xl-block{display:block!important}
+    .util_d-xl-grid{display:grid!important}
+    .util_d-xl-table{display:table!important}
+    .util_d-xl-table-row{display:table-row!important}
+    .util_d-xl-table-cell{display:table-cell!important}
+    .util_d-xl-flex{display:flex!important}
+    .util_d-xl-inline-flex{display:inline-flex!important}
+    .util_d-xl-none{display:none!important}
+}
+/** Custom Utilities End **/

@@ -1,0 +1,78 @@
+@media print {
+    .no-print {
+        display: none;
+    }
+
+    .text-nowrap {
+        white-space: wrap !important;
+    }
+
+    .table-responsive {
+        overflow-x: none !important;
+    }
+
+    .content-laporan {
+        padding: 0;
+    }
+
+    body {
+        font-size: 11px;
+        margin: 3mm;
+    }
+}
+
+table {
+    th div {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+.judul-laporan {
+    font-size: 24px;
+    text-align: center;
+}
+
+.content-laporan {
+    max-width: 1500px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+.kop {
+    width: 100%;
+    padding: 20px;
+    border-bottom: 2px solid black;
+    position: relative;
+    text-align: center;
+
+    .logo {
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+
+        img {
+            max-width: 100px;
+            height: auto;
+        }
+    }
+
+    .univ-info {
+        display: inline-block;
+        margin: 0 auto;
+
+        h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        p {
+            margin: 0;
+            font-size: 14px;
+            color: #666;
+        }
+    }
+}

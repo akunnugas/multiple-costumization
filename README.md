@@ -1,216 +1,66 @@
-# Metronic Tailwind HTML Laravel Livewire Integration
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-This project integrates Metronic Tailwind HTML themes (Demo1 and Demo2) into a Laravel 11 application with Livewire 3.x components, following the exact folder structure pattern from the Metronic Tailwind Symfony version.
+<p align="center">
+<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
-## Project Overview
+## About Laravel
 
-**Goal**: Convert Metronic Tailwind HTML demo1 and demo2 index.html files into Laravel Livewire, maintaining the Symfony-style view structure with demo1/ and demo2/ directories for layouts and partials.
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-## Tech Stack
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-- **Laravel**: 11.x (Latest)
-- **Livewire**: 3.x
-- **Tailwind CSS**: 4.x
-- **Alpine.js**: 3.x
-- **Vite**: 6.x
-- **Node.js**: Latest compatible version
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Project Structure
+## Learning Laravel
 
-```
-resources/
-├── css/
-│   └── app.css (Tailwind + Metronic custom styles)
-├── js/
-│   └── app.js (Alpine.js + Livewire integration)
-└── views/
-    ├── layouts/
-    │   ├── partials/
-    │   │   ├── head.blade.php
-    │   │   ├── scripts.blade.php
-    │   │   └── theme-mode.blade.php
-    │   ├── demo1/
-    │   │   ├── base.blade.php
-    │   │   └── partials/
-    │   │       ├── header.blade.php
-    │   │       ├── sidebar.blade.php
-    │   │       ├── footer.blade.php
-    │   │       └── mega-menu.blade.php
-    │   └── demo2/
-    │       ├── base.blade.php
-    │       └── partials/
-    │           ├── header.blade.php
-    │           └── footer.blade.php
-    ├── demo1/
-    │   └── index.blade.php
-    ├── demo2/
-    │   └── index.blade.php
-    └── livewire/
-        ├── demo1/
-        │   ├── navigation-menu.blade.php
-        │   ├── sidebar-toggle.blade.php
-        │   └── user-dropdown.blade.php
-        ├── demo2/
-        │   ├── navigation-menu.blade.php
-        │   ├── balance-widget.blade.php
-        │   └── user-dropdown.blade.php
-        └── shared/
-            ├── theme-mode.blade.php
-            ├── search-box.blade.php
-            └── notification-dropdown.blade.php
-```
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-## Features Implemented
+You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-### ✅ Completed Features
+If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-1. **Laravel Project Setup**
-   - Fresh Laravel 11.x installation
-   - Livewire 3.x integration
-   - Tailwind CSS 4.x configuration
-   - Alpine.js integration
-   - Vite 6.x build system
+## Laravel Sponsors
 
-2. **Routing System**
-   - Demo1 routes (`/demo1`)
-   - Demo2 routes (`/demo2`)
-   - Controllers: `Demo1Controller`, `Demo2Controller`
+We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-3. **Livewire Components**
-   - **Demo1 Components**:
-     - `NavigationMenu` - Sidebar navigation with active states
-     - `SidebarToggle` - Mobile sidebar toggle functionality
-     - `UserDropdown` - User account dropdown with settings
-   - **Demo2 Components**:
-     - `NavigationMenu` - Horizontal navigation menu
-     - `BalanceWidget` - Balance display component
-     - `UserDropdown` - User account dropdown
-   - **Shared Components**:
-     - `ThemeMode` - Dark/light theme toggle
-     - `SearchBox` - Global search with results
-     - `NotificationDropdown` - Notification management
+### Premium Partners
 
-4. **Layout System**
-   - **Demo1**: Sidebar-based layout (traditional admin)
-   - **Demo2**: Vertical layout (modern dashboard)
-   - Shared partials (head, scripts, theme-mode)
-   - Proper asset management with `asset()` helpers
-
-5. **UI Components**
-   - Dashboard cards with statistics
-   - Interactive menus and dropdowns
-   - Responsive design with mobile support
-   - Chart placeholders (ready for ApexCharts/Chart.js)
-   - Data tables with sorting/filtering readiness
-
-6. **Build System**
-   - Vite configuration optimized for Laravel
-   - Tailwind CSS with custom Metronic classes
-   - PostCSS processing
-   - Development and production builds working
-
-### 🔧 Livewire Component Classes Needed
-
-The following PHP classes need to be created for full functionality:
-
-```php
-// Demo1 Components
-app/Livewire/Demo1/NavigationMenu.php
-app/Livewire/Demo1/SidebarToggle.php
-app/Livewire/Demo1/UserDropdown.php
-
-// Demo2 Components
-app/Livewire/Demo2/NavigationMenu.php
-app/Livewire/Demo2/BalanceWidget.php
-app/Livewire/Demo2/UserDropdown.php
-
-// Shared Components
-app/Livewire/Shared/ThemeMode.php
-app/Livewire/Shared/SearchBox.php
-app/Livewire/Shared/NotificationDropdown.php
-```
-
-### 🎨 Styling System
-
-- **Tailwind CSS 4.x** with custom Metronic utilities
-- **Custom CSS classes**: `kt-*` prefixed components
-- **Dark mode support** with theme switching
-- **Responsive design** with mobile-first approach
-- **Custom color variables** matching Metronic design system
-
-## Usage
-
-### Development
-```bash
-# Install dependencies
-npm install
-composer install
-
-# Start development server
-php artisan serve
-npm run dev
-```
-
-### Production Build
-```bash
-npm run build
-```
-
-### Routes
-- **Demo1 Dashboard**: `/demo1` - Sidebar-based layout
-- **Demo2 Dashboard**: `/demo2` - Vertical layout
-
-## Next Steps
-
-### Immediate Tasks
-1. **Create Livewire PHP Classes** - Implement the component logic
-2. **Add Media Assets** - Copy Metronic images and icons
-3. **Enhance Interactivity** - Add chart libraries, form validation
-4. **Database Integration** - Connect real data sources
-5. **Authentication** - Integrate Laravel Breeze/Jetstream
-
-### Enhancement Opportunities
-1. **Advanced Components**
-   - Data tables with server-side processing
-   - Real-time notifications
-   - File upload components
-   - Form builders
-
-2. **Performance Optimization**
-   - Lazy loading for components
-   - Asset optimization
-   - Caching strategies
-
-3. **Additional Features**
-   - Multi-language support
-   - API integration
-   - WebSocket notifications
-   - Advanced search
-
-## Architecture Decisions
-
-### Why This Structure?
-- **Symfony Pattern Compliance**: Matches the original Metronic structure
-- **Separation of Concerns**: Demo1 and Demo2 are completely separate
-- **Reusable Components**: Shared components reduce duplication
-- **Maintainability**: Clear organization makes updates easier
-
-### Technology Choices
-- **Livewire over Vue/React**: Simpler for Laravel developers
-- **Tailwind CSS**: Utility-first, matches Metronic approach
-- **Alpine.js**: Lightweight interactivity for enhanced UX
-- **Vite**: Modern build tool with hot reloading
+- **[Vehikl](https://vehikl.com/)**
+- **[Tighten Co.](https://tighten.co)**
+- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+- **[64 Robots](https://64robots.com)**
+- **[Cubet Techno Labs](https://cubettech.com)**
+- **[Cyber-Duck](https://cyber-duck.co.uk)**
+- **[Many](https://www.many.co.uk)**
+- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
+- **[DevSquad](https://devsquad.com)**
+- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
+- **[OP.GG](https://op.gg)**
+- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
+- **[Lendio](https://lendio.com)**
 
 ## Contributing
 
-When adding new components or features:
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-1. Follow the established directory structure
-2. Use proper Blade syntax with `{{-- comments --}}`
-3. Implement Livewire wire:model for forms
-4. Maintain responsive design principles
-5. Test both Demo1 and Demo2 layouts
+## Code of Conduct
+
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+
+## Security Vulnerabilities
+
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
 ## License
 
-This integration follows the Metronic license terms. The Laravel application code is open source.
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

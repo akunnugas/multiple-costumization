@@ -1,0 +1,248 @@
+.body {
+    width: 85%;
+    margin: 12px auto;
+
+    .title-page {
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .title {
+        margin: 10px 0;
+    }
+
+    .information {
+        font-size: 12px;
+        margin: 12px 0;
+        line-height: 1.15em;
+    }
+
+    .table {
+        margin: 12px 0;
+        th {
+            white-space: break-spaces !important;
+            height: max-content;
+            max-height: max-content;
+            background: #34495E;
+            padding: 8px;
+            text-align: center;
+            font-weight: bold;
+            vertical-align: middle;
+            color: white;
+        }
+
+        tfoot {
+            td {
+                font-weight: 600 !important;
+            }
+        }
+    
+        td {
+            padding: 12px 8px;
+        }
+    
+        .cell-action {
+            .dropdown-group {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                margin: auto;
+            }
+        }
+    }
+
+    .disabled {
+        cursor: not-allowed;
+        background-color: #e9ecef;
+    }
+
+    .vertical {
+        writing-mode: vertical-lr;
+        transform: rotate(180deg);
+        padding: 8px;
+        border: solid 1px #EEF2F6; 
+    }
+    
+    .title {
+        font-size: 16px;
+        font-weight: bold;
+    }
+    .horizontal {
+        padding: 8px;
+    }
+    .txt-right{
+        text-align: right;
+    }
+    .d-flex{
+        display: flex;
+    }
+    .m-auto {
+        margin: 0 auto;
+    }
+
+    .item-footer{
+        font-weight: bold;
+    }
+
+    .txt-not-found{
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .page-center {
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .page-information {
+        .body-information {
+            padding-top: 200px;
+
+        }
+
+        .footer-information {
+            padding-top: 200px;
+        }
+        
+        img {
+            margin: 50px auto;
+        }
+
+        h3 {
+            font-size: 24px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        h4 {
+            font-size: 18px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        h3, h4 {
+            line-height: 1.15em;
+        }
+    }
+    
+}
+
+p.table-content{
+    margin: 12px 0;
+    line-height: 1.15em;
+}
+
+.ql-editor a {
+    color: var(--qn-primary-500) !important;
+    text-decoration: none !important;
+}
+
+.not-found {
+    text-align: center;
+    background: beige;
+    padding: 10px;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+.header-content {
+    margin : 24px 0;
+    text-align: center;
+}
+
+.information-content {
+    margin: 24px 0;
+    table {
+        background: transparent;
+
+        tbody {
+            tr.asign {
+                .title{
+                    vertical-align: baseline;
+                }
+            }
+            tr {
+                .title {
+                    background-color: var(--qn-neutral-400);
+                }
+                td {
+                    .value {
+                        margin: 10px;
+                    }
+                    height: 1.75rem;
+                    max-height: 1.75rem;
+                    padding: 12px;
+                }
+            }
+            
+        }        
+    }
+
+    .title {
+        font-weight: bold;
+    }
+    .value {
+        font-size: 1rem;
+    }
+    .box-asign {
+        margin: 10px;
+        width: 100px;
+        height: 100px;
+    }
+    
+}
+
+h4>.content {
+    margin-bottom: 12px;
+}
+
+.form-nav__button-wrapper {
+    display: flex;
+    gap: 14px;
+}
+
+@media print {
+    .no-print {
+        display: none !important;
+        visibility: hidden;
+    }
+    
+    .page-breaker-stop {
+        page-break-after: always;
+    }
+
+    .page-information.lk-page{
+        h3 {
+            font-size: 35px !important;
+        }
+        h4 {
+            font-size: 25px !important;
+        }
+        
+        .footer-information {
+            padding-top: 300px !important;
+        }
+
+        .body-information{
+            padding-top: 260px !important;
+        }
+
+        img {
+            width: 300px;
+            height: 300px;
+            margin-top: 100px;
+        }
+    }
+
+    table {
+        thead {
+            tr {
+                th {
+                color: var(--qn-neutral-700) !important;
+                }
+            }
+        }
+    }
+}

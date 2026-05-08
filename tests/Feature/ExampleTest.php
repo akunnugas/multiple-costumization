@@ -14,10 +14,6 @@ class ExampleTest extends TestCase
     {
         $response = $this->get('/');
 
-		$response->assertRedirect('/demo1');
-
-        // Test that the demo1 route works
-        $response = $this->get('/demo1');
         $response->assertStatus(200);
     }
 }

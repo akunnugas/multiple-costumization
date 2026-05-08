@@ -1,64 +1,72 @@
 <?php
 
+use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Route;
-use App\Livewire\Demo1\Index as Demo1Index;
-use App\Livewire\Demo1\Profile as Demo1Profile;
-use App\Livewire\Demo1\Settings as Demo1Settings;
-use App\Livewire\Demo1\Users as Demo1Users;
-use App\Livewire\Demo2\Index as Demo2Index;
-use App\Livewire\Demo2\Profile as Demo2Profile;
-use App\Livewire\Demo2\Settings as Demo2Settings;
-use App\Livewire\Demo2\Users as Demo2Users;
-use App\Livewire\Demo3\DraftForm as Demo3DraftForm;
-use App\Livewire\Demo3\DraftIndex as Demo3DraftIndex;
-use App\Livewire\Demo3\Index as Demo3Index;
-use App\Livewire\Demo4\Index as Demo4Index;
-use App\Livewire\Demo5\Index as Demo5Index;
-use App\Livewire\Demo6\Index as Demo6Index;
-use App\Livewire\Demo7\Index as Demo7Index;
-use App\Livewire\Demo8\Index as Demo8Index;
-use App\Livewire\Demo9\Index as Demo9Index;
-use App\Livewire\Demo10\Index as Demo10Index;
+use Modules\Core\Http\Controllers\Web\SampleController;
+// use Modules\Gate\Http\Controllers\Web\SessionController;
+use Modules\Core\Http\Controllers\Web\TempController;
 
-Route::get('/', function () {
-    return redirect()->route('demo1.index');
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
+
+// FIXME: sementara
+/* Route::middleware('guest')->group(function () {
+    Route::get('/', [SessionController::class, 'index'])->name('login');
+}); */
+
+Route::middleware('guest')->group(function () {
+    // NOTE: Sementara tidak dipakai
+    // Route::resource('/', TempController::class)->only(['index', 'store'])->names(['index' => 'login']);
+    Route::get('/', [TempController::class, 'redirectGateV1'])->name('login');
+    // Route::post('/temp/migrate', [TempController::class, 'migrate']);
 });
 
-// Demo1 routes
-Route::get('/demo1', Demo1Index::class)->name('demo1.index');
-Route::get('/demo1/profile', Demo1Profile::class)->name('demo1.profile');
-Route::get('/demo1/settings', Demo1Settings::class)->name('demo1.settings');
-Route::get('/demo1/users', Demo1Users::class)->name('demo1.users');
+Route::get(RouteServiceProvider::HOME, [TempController::class, 'redirectToActiveModule']);
 
-// Demo2 routes
-Route::get('/demo2', Demo2Index::class)->name('demo2.index');
-Route::get('/demo2/profile', Demo2Profile::class)->name('demo2.profile');
-Route::get('/demo2/settings', Demo2Settings::class)->name('demo2.settings');
-Route::get('/demo2/users', Demo2Users::class)->name('demo2.users');
+if (env('APP_ENV') !== 'production') {
 
-// Demo3 routes
-Route::get('/demo3', Demo3Index::class)->name('demo3.index');
-Route::get('/demo3/drafts', Demo3DraftIndex::class)->name('demo3.drafts.index');
-Route::get('/demo3/drafts/create', Demo3DraftForm::class)->name('demo3.drafts.create');
-Route::get('/demo3/drafts/{draft}/edit', Demo3DraftForm::class)->name('demo3.drafts.edit');
+    // sample
+    Route::prefix('sample')->controller(SampleController::class)->group(function () {
+        Route::middleware('auth.home')->group(function () {
+            Route::get('/', 'home')->name('sample.home');
+        });
+        Route::middleware('auth.role')->group(function () {
+            Route::get('list', 'index')->name('sample.resource.index');
+            Route::get('create', 'create')->name('sample.resource.create');
+            Route::get('detail', 'detail')->name('sample.resource.detail');
+        });
+        Route::get('list/sidebar', 'indexWithSidebar')->middleware('auth.role:list-sidebar')->name('sample.resource.index.sidebar');
+        Route::get('create/advanced', 'createAdvanced')->middleware('auth.role:create-advanced')->name('sample.resource.create.advanced');
 
-// Demo4 routes
-Route::get('/demo4', Demo4Index::class)->name('demo4.index');
+        // FrontEnd (HTML Only)
+        Route::get('frontend/nav', 'frontendDetail');
+        Route::get('frontend/tab', 'frontendTab');
+        Route::get('frontend/form', 'frontendForm');
+        Route::get('frontend/detail', function () {
+            return view('core::pages.sample.frontend.detail');
+        });
+    });
+}
 
-// Demo5 routes
-Route::get('/demo5', Demo5Index::class)->name('demo5.index');
+// NOTE: Healthy check untuk kebutuhan probe
+Route::middleware('healthy.check')->group(function () {
+    Route::get('/healthz', function () {
+        return response()->json([
+            'status' => 'OK!!!',
+        ]);
+    });
+});
 
-// Demo6 routes
-Route::get('/demo6', Demo6Index::class)->name('demo6.index');
 
-// Demo7 routes
-Route::get('/demo7', Demo7Index::class)->name('demo7.index');
-
-// Demo8 routes
-Route::get('/demo8', Demo8Index::class)->name('demo8.index');
-
-// Demo9 routes
-Route::get('/demo9', Demo9Index::class)->name('demo9.index');
-
-// Demo10 routes
-Route::get('/demo10', Demo10Index::class)->name('demo10.index');
+// fallback route
+Route::fallback(function () {
+    abort(404);
+});

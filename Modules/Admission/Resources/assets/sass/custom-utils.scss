@@ -1,0 +1,307 @@
+/** Custom Utilities Start **/
+
+// Display Start
+.util_d-inline {
+    display: inline !important;
+}
+.util_d-inline-block {
+    display: inline-block !important;
+}
+.util_d-block {
+    display: block !important;
+}
+.util_d-grid {
+    display: grid !important;
+}
+.util_d-table {
+    display: table !important;
+}
+.util_d-table-row {
+    display: table-row !important;
+}
+.util_d-table-cell {
+    display: table-cell !important;
+}
+.util_d-flex {
+    display: flex !important;
+}
+.util_d-inline-flex {
+    display: inline-flex !important;
+}
+.util_d-none {
+    display: none !important;
+}
+// Display End
+
+// Margin Start
+.util_m-0 {
+    margin: 0 !important;
+}
+.util_mt-10 {
+    margin-top: 10px !important;
+}
+.util_mb-10 {
+    margin-bottom: 10px !important;
+}
+.util_mb-5 {
+    margin-bottom: 5px !important;
+}
+.util_mt-20 {
+    margin-top: 20px !important;
+}
+.util_mb-20 {
+    margin-bottom: 20px !important;
+}
+// Margin End
+
+//Padding Start
+.util_p-0 {
+    padding: 0 !important;
+}
+.util_p-20 {
+    padding: 20px !important;
+}
+.util_py-0 {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+.util_pl-10 {
+    padding-left: 10px !important;
+}
+.util_pl-20 {
+    padding-left: 20px !important;
+}
+.util_pr-10 {
+    padding-right: 10px !important;
+}
+.util_pr-20 {
+    padding-right: 20px !important;
+}
+// Padding End
+
+// Text Color Start
+.util_text-secondary {
+    font-weight: 400;
+    font-size: 14px;
+    color: #667686;
+}
+.util_text-default {
+    font-weight: 400;
+    font-size: 14px;
+    color: #2a2a2c;
+}
+.util_text-warning {
+    font-weight: 600;
+    font-size: 14px;
+    color: rgb(247, 129, 0);
+}
+.util_text-primary {
+    font-weight: 600;
+    font-size: 14px;
+    color: rgb(43, 69, 162);
+}
+// Text Color End
+
+// Text Alignment Start
+.util_text-right {
+    text-align: right;
+}
+.util_text-center {
+    text-align: center;
+}
+// Text Alignment End
+
+.util_text-bold {
+    font-weight: bold;
+}
+.util_bg-primary {
+    background-color: var(--qn-primary);
+}
+.util_scrollable {
+    width: 100%;
+    overflow: auto;
+    @include media-down("md") {
+        /* Hide scrollbar for IE, Edge and Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.util_scrollable::-webkit-scrollbar {
+    @include media-down("md") {
+        display: none;
+    }
+}
+
+// Other Fix Start
+input[type="checkbox"] + label {
+    cursor: pointer;
+}
+.util_margin-top-fix {
+    margin-top: 0 !important;
+}
+.util_margin-top-fix .container {
+    padding-top: 1.25rem !important;
+}
+.util_row-gap-0 {
+    row-gap: 0 !important;
+}
+.util_border-radius-top-0 {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+}
+.util_border-radius-bottom-0 {
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+.util_border-top-none {
+    border-top: none !important;
+}
+.util_w-100 {
+    width: 100% !important;
+}
+.util_flex-grow-1 {
+    flex-grow: 1 !important;
+}
+.util_border-solid {
+    border: 1px solid #dfe3e9;
+}
+// Other Fix End
+
+// Utk menggunakan function media-up ini harus mengimport _media.scss di core nya
+@include media-up("sm") {
+    // 48rem -> 768px
+    .util_d-sm-inline {
+        display: inline !important;
+    }
+    .util_d-sm-inline-block {
+        display: inline-block !important;
+    }
+    .util_d-sm-block {
+        display: block !important;
+    }
+    .util_d-sm-grid {
+        display: grid !important;
+    }
+    .util_d-sm-table {
+        display: table !important;
+    }
+    .util_d-sm-table-row {
+        display: table-row !important;
+    }
+    .util_d-sm-table-cell {
+        display: table-cell !important;
+    }
+    .util_d-sm-flex {
+        display: flex !important;
+    }
+    .util_d-sm-inline-flex {
+        display: inline-flex !important;
+    }
+    .util_d-sm-none {
+        display: none !important;
+    }
+}
+
+@include media-up("md") {
+    // 80rem -> 1280px
+    .util_d-md-inline {
+        display: inline !important;
+    }
+    .util_d-md-inline-block {
+        display: inline-block !important;
+    }
+    .util_d-md-block {
+        display: block !important;
+    }
+    .util_d-md-grid {
+        display: grid !important;
+    }
+    .util_d-md-table {
+        display: table !important;
+    }
+    .util_d-md-table-row {
+        display: table-row !important;
+    }
+    .util_d-md-table-cell {
+        display: table-cell !important;
+    }
+    .util_d-md-flex {
+        display: flex !important;
+    }
+    .util_d-md-inline-flex {
+        display: inline-flex !important;
+    }
+    .util_d-md-none {
+        display: none !important;
+    }
+}
+
+@include media-up("lg") {
+    // 83.5rem -> 1336px
+    .util_d-lg-inline {
+        display: inline !important;
+    }
+    .util_d-lg-inline-block {
+        display: inline-block !important;
+    }
+    .util_d-lg-block {
+        display: block !important;
+    }
+    .util_d-lg-grid {
+        display: grid !important;
+    }
+    .util_d-lg-table {
+        display: table !important;
+    }
+    .util_d-lg-table-row {
+        display: table-row !important;
+    }
+    .util_d-lg-table-cell {
+        display: table-cell !important;
+    }
+    .util_d-lg-flex {
+        display: flex !important;
+    }
+    .util_d-lg-inline-flex {
+        display: inline-flex !important;
+    }
+    .util_d-lg-none {
+        display: none !important;
+    }
+}
+
+@include media-up("xl") {
+    // 90rem -> 1440px
+    .util_d-xl-inline {
+        display: inline !important;
+    }
+    .util_d-xl-inline-block {
+        display: inline-block !important;
+    }
+    .util_d-xl-block {
+        display: block !important;
+    }
+    .util_d-xl-grid {
+        display: grid !important;
+    }
+    .util_d-xl-table {
+        display: table !important;
+    }
+    .util_d-xl-table-row {
+        display: table-row !important;
+    }
+    .util_d-xl-table-cell {
+        display: table-cell !important;
+    }
+    .util_d-xl-flex {
+        display: flex !important;
+    }
+    .util_d-xl-inline-flex {
+        display: inline-flex !important;
+    }
+    .util_d-xl-none {
+        display: none !important;
+    }
+}
+/** Custom Utilities End **/

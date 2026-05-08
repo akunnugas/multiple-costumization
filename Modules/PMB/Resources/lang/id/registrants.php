@@ -1,0 +1,52 @@
+<?php
+
+return [
+    'main' => 'Pendaftar',
+
+    'code' => 'Kode Pendaftar',
+    'person_id' => 'Data Pengguna',
+    'registration_period_id' => 'Periode Pendaftaran',
+    'student_id' => 'NIM',
+    'source_type' => 'Tipe Sumber Data',
+    'qualified_status' => 'Status Kelulusan Seleksi Pendaftaran',
+    'qualified_program_id' => 'Prodi Kelulusan Seleksi Pendaftaran',
+    'recommended_by' => 'User Perekomendasi',
+    'utm_source' => 'Sumber Informasi Pendaftaran',
+    'is_nim_imported' => 'NIM di-import?',
+    'registered_at' => 'Tanggal Mendaftar',
+    're_enrollment_date' => 'Tanggal Daftar Ulang',
+    'verified_at' => 'Tanggal Verifikasi',
+    'active_at' => 'Tanggal Aktif',
+
+    'nik' => 'NIK',
+    'name' => 'Nama Lengkap',
+    'birth_date' => 'Tanggal Lahir',
+    'birth_place' => 'Tempat Lahir',
+    'gender' => 'Jenis Kelamin',
+    'religion_id' => 'Agama',
+    'ethnic_id' => 'Suku',
+
+    'no_kk' => 'No KK',
+    'email' => 'Email',
+    'phone_number' => 'No. Telepon',
+    'nokps' => 'No. KPS',
+    'passport' => 'No. Passport',
+    'npsn' => 'NPSN',
+
+    'country_id' => 'Negara',
+    'province_id' => 'Provinsi',
+    'city_id' => 'Kabupaten / Kota',
+    'district_id' => 'Kecamatan',
+    'village_name' => 'Desa',
+    'dusun' => 'Dusun',
+    'full_address' => 'Alamat Lengkap',
+    'rt' => 'RT',
+    'rw' => 'RW',
+    'postal_code' => 'Kode Pos',
+
+    'job_id' => 'Pekerjaan',
+    'institution_name' => 'Nama Institusi',
+    'uniform_size' => 'Ukuran Seragam',
+    'weight' => 'Berat (kg)',
+    'height' => 'Tinggi (cm)',
+];

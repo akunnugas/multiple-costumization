@@ -1,0 +1,108 @@
+.items {
+    box-shadow: none;
+}
+
+.box-table__header {
+    padding-bottom: 0;
+}
+
+.files {
+    .box-table {
+        .box-table__content {
+            border: none;
+            padding: 0;
+        }
+
+        .box-table__footer {
+            padding: 0;
+        }
+    }
+}
+
+.sharing-modal {
+    hr {
+        margin: 1.25rem 0;
+    }
+
+    .modal__header::before {
+        content: "\ebe4";
+    }
+
+    .visibility-option {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        .globe-icon {
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 100%;
+            width: 1.75rem;
+            height: 1.75rem;
+            background: var(--qn-neutral-300);
+
+            .icon {
+                font-size: 20px;
+                color: black;
+            }
+        }
+    }
+
+    .visibility-option__content {
+        display: flex;
+        flex-grow: 1;
+        justify-content: space-between;
+        align-items: center;
+
+        .visibility-option__text {
+            p {
+                color: var(--qn-neutral-600)
+            }
+        }
+
+        .switch-container {
+            display: inline-block;
+            width: unset;
+        }
+    }
+
+    .access-list {
+        .access-list__title {
+            padding-bottom: 0.75rem;
+        }
+
+        .owner-info__container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+
+            .owner-info__inner {
+                display: flex;
+                align-items: center;
+                gap: 0.625rem;
+            }
+
+            .owner-info__meta {
+                .owner__name,
+                .owner__email {
+                    display: block;
+                    font-size: 0.8rem;
+                    line-height: 0.8rem;
+                }
+
+                .owner__name {
+                    font-weight: 600;
+                    color: var(--qn-neutral-900);
+                }
+
+                .owner__email {
+                    font-weight: 400;
+                    color: var(--qn-neutral-600);
+                }
+            }
+        }
+    }
+}

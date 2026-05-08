@@ -1,0 +1,11 @@
+<?php
+
+namespace Modules\$MODULE$\Tests\Model;
+
+use Modules\Core\Helpers\ModelTestCase;
+use Modules\$MODULE$\Models\$MODEL$;
+
+class $MODEL$ModelTest extends ModelTestCase
+{
+    protected $model = $MODEL$::class;
+}

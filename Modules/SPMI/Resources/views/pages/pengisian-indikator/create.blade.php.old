@@ -1,0 +1,532 @@
+@php
+    use Modules\SPMI\Models\PenilaianMatriks;
+    use Modules\DMS\Helpers\DokumenHelper;
+
+    // default title
+    $title ??= 'Detail Pengisian Laporan Kinerja';
+    if (empty($subtitle) && !empty($title)) {
+        $subtitle = $title;
+    }
+
+    $isCreate = empty($resourceId);
+
+    if ($isCreate) {
+        $method = 'POST';
+        $action = Page::indexURL();
+    } else {
+        $method = 'PUT';
+        $action = Page::detailURL($resourceId);
+    }
+
+    $isEdit = false;
+
+    if (empty($_GET['is_edit'])) {
+        $isEdit = false;
+        // set url to edit
+        $urlChange = Page::buildURL(['is_edit' => '1']);
+    } else {
+        $isEdit = true;
+        // delete edit parameter
+        $urlChange = Page::buildURL(['is_edit' => null]);
+    }
+
+    $isDefaultView = false;
+    if (empty($_GET['id_indikator_laporan_kinerja'])) {
+        $isDefaultView = true;
+    }
+
+    $information = Page::showURLInfo();
+    $urlReports = route('spmi.reports.filling-reports.generate');
+
+    $tarikDataLK = Modules\SPMI\Models\TarikDataLK::where('id_indikator_laporan_kinerja', $data['data']['id'])->first();
+    $isGetData = !empty($tarikDataLK);
+    $isGetDataKurikulum = !empty($tarikDataLK) && $tarikDataLK->apakah_kurikulum;
+
+    // Temporary: disable tarik data untuk HR
+    if ($isGetData && $tarikDataLK->sumber == 'siakad_hr') {
+        $isGetData = false;
+    }
+
+@endphp
+@pushOnce('head')
+    <style>
+        .full-page-loader {
+            display: flex;
+            position: fixed;
+            left: 0;
+            top: 0;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            background: #ffffff90;
+            z-index: 9999;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+@endPushOnce
+
+<x-core::layouts.outer header-class="header_position-static" :$menu :$title>
+    @push('head')
+        @vite('Modules/SPMI/Resources/assets/sass/pengisian-indikator/create.scss')
+        @vite('Modules/SPMI/Resources/assets/js/pengisian-indikator/create.js')
+    @endpush
+
+    <x-core::form id="form_list" :$method :$action>
+        <div class="container">
+            <div class="card">
+                <div class="card__header">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb__item">
+                            <span class="icon icon-home-mini"></span>
+                        </li>
+                        @foreach ($breadcrumb['items'] as $i => $item)
+                            @if ($item['showLink'])
+                                <li class="breadcrumb__item">
+                                    <a href="{{ url($item['path']) }}">
+                                        {{ $item['label'] }}
+                                    </a>
+                                </li>
+                            @elseif (!empty($item['label']))
+                                <li class="breadcrumb__item active">{{ $item['label'] }}</li>
+                            @endif
+                        @endforeach
+                        @if ($breadcrumb['showTitle'])
+                            <li class="breadcrumb__item active">{{ $subtitle }}</li>
+                        @endif
+                    </ul>
+
+                    <div class="button-group">
+                        <div class="button-group__left">
+                            <a class="btn btn_outline btn_xs" href="{{ route('spmi.pengisian-indikator.index') }}">
+                                Kembali ke List
+                            </a>
+
+                            @if ($data['apakah_bisa_aksi'])
+                                <a onclick="List.showReport('{{ $urlReports }}');"
+                                    class="btn btn_outline btn_xs report-button">
+                                    <i class="icon qn-202407090001"></i>
+                                    Laporan
+                                </a>
+
+                                @if ($data['apakah_sudah_mapping'])
+                                    @if (!$isDefaultView)
+                                        @if ($isGetData && $data['apakah_tanggal_pengisian_valid'])
+                                            <button type="button" class="btn btn_outline btn_xs report-button"
+                                                id="btn_filling_getdata">
+                                                <i class="icon icon-arrow-down-tray"></i> Tarik Data
+                                            </button>
+                                        @endif
+                                        @if (!empty($resourceId) && isset($data['data']['nomor_indikator']) && $data['apakah_tanggal_pengisian_valid'])
+                                            @php
+                                                $encodedDeleteAll = base64_encode(
+                                                    json_encode([
+                                                        'id' => $data['raw']['id_indikator_laporan_kinerja'],
+                                                    ]),
+                                                );
+                                            @endphp
+                                            <a type="button" class="btn btn_destructive btn_xs" id="btn_delete_all"
+                                                href="javascript:deleteRecordAll('{{ $encodedDeleteAll }}')"
+                                                data-btn-label="Hapus">
+                                                <i class="icon icon-trash"></i> Hapus Data
+                                            </a>
+                                        @endif
+                                    @endif
+
+                                    @if (!empty($data['data']['apakah_layout_fixed']) && $data['apakah_tanggal_pengisian_valid'])
+                                        @if (!$isEdit)
+                                            <a class="btn btn_primary btn_xs" href="{{ $urlChange }}">
+                                                Ubah Data
+                                            </a>
+                                        @else
+                                            <a href="{{ $urlChange }}">
+                                                <button type="button" class="btn btn_outline btn_xs">
+                                                    Batal
+                                                </button>
+                                            </a>
+                                            <button type="submit" class="btn btn_primary btn_xs">
+                                                Simpan
+                                            </button>
+                                        @endif
+                                    @endif
+                                @endif
+                            @endif
+                        </div>
+
+                        <div class="button-group__mobile">
+                            <button type="button" class="btn btn_outline btn_icon btn_xs">
+                                <span class="icon icon-arrow-left-solid"></span>
+                            </button>
+
+                            <button type="button" class="btn btn_primary btn_icon btn_xs">
+                                <span class="icon icon-pencil-solid"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card__body">
+                    <div class="sidebar-new">
+                        <div class="title-sidebar">
+                            <h2>Pengisian Laporan Kinerja</h2>
+                        </div>
+
+                        <div class="body-sidebar tree">
+                            <ul>
+                                {{-- <li>
+                                    <a href="{{ $data['link_proposing_team'] }}" style="padding-left: 0px">
+                                        <div class="indicator-vector"></div>
+                                        <div class="number"></div>
+                                        <div class="title"><b>Identitas Pengusul</b></div>
+                                    </a>
+                                </li> --}}
+                                {!! $data['sidebar'] !!}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div class="title">
+                            <h2>{{ @$data['data']['name'] }}</h2>
+                        </div>
+                        <div class="body">
+                            <div class="legend">
+                                @foreach ($data['information'] as $key => $value)
+                                    @php
+                                        $label = Page::defineLabelByField($key);
+                                    @endphp
+                                    <div class="legend__section">
+                                        <div class="legend__section_left">
+                                            <h3>{{ $label }}</h3>
+                                        </div>
+                                        <span>:</span>
+                                        <div class="legend__section_right">
+                                            <p>{{ $value }}</p>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+
+                            @if (!$data['apakah_tanggal_pengisian_valid'])
+                                @php
+                                    $isBeforeAssessmentStart = $data['apakah_pengisian_belum_dimulai'];
+                                @endphp
+                                <div class="alert alert_{{ $isBeforeAssessmentStart ? 'warning' : 'danger' }}"
+                                    style="margin-bottom: 1rem">
+                                    <div class="alert__content">
+                                        <p>Pengisian tanggal <b>{{ $data['information']['filling_date'] }}</b>
+                                            {{ $isBeforeAssessmentStart
+                                                ? 'belum dibuka. Anda belum bisa melakukan pengisian.'
+                                                : 'telah berakhir. Anda tidak bisa melakukan pengisian lagi.' }}
+                                        </p>
+                                    </div>
+                                </div>
+                            @endif
+
+                            <x-core::layouts.html.alert style="margin-bottom:1rem" />
+
+                            @if ($isDefaultView)
+                            @else
+                                @if (
+                                    //!empty($data['data']['deskripsi_sumber_data']) &&
+                                    $isGetData)
+                                    <div class="panel-group">
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading" data-target="#panel-keterangan">
+                                                <div class="">
+                                                    <i class="icon icon-information-circle-solid"></i>
+                                                    Keterangan Tarik Data
+                                                    <i class="icon icon-chevron-down-solid right indicator-icon"></i>
+                                                </div>
+                                            </div>
+                                            <div id="panel-keterangan" class="panel-collapse">
+                                                <div class="panel-body">
+                                                    {!! $data['data']['deskripsi_sumber_data'] !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                                <p>
+                                    {!! $data['data']['deskripsi'] !!}
+                                </p>
+                                <div class="parent">
+                                    <div class="table-responsive">
+                                        {!! $data['table'] !!}
+                                    </div>
+                                </div>
+                                @if (!empty($data['data']['information']))
+                                    <div class="notes">
+                                        <h4>Catatan:</h4>
+                                        <p>{!! $data['data']['information'] !!}</p>
+                                    </div>
+                                @endif
+
+                                <div class="documents">
+                                    <div class="header-document">
+                                        <h3>Dokumen Pendukung</h3>
+                                        @if ($data['apakah_bisa_aksi'] && $data['apakah_tanggal_pengisian_valid'] && $data['apakah_sudah_mapping'])
+                                            <div class="actions">
+                                                <a class="btn btn_xs btn_primary" href="javascript::void(0)"
+                                                    data-toggle="modal" data-target="#upload-document">
+                                                    Unggah Dokumen
+                                                </a>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="table-max table-max_absolute util_mt-15">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 0; padding: 14px">No</th>
+                                                <th>Nama Dokumen Pendukung</th>
+                                                <th style="width: 10%">Ukuran</th>
+                                                <th style="width: 10%">Terakhir Diubah</th>
+                                                <th class="cell-action cell-center">Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {{-- // Jika kosong --}}
+                                            @if (empty($data['dokumen_pendukung']))
+                                                <tr>
+                                                    <td colspan="100" class="cell-center">Tidak ada data</td>
+                                                </tr>
+                                            @endif
+                                            @foreach ($data['dokumen_pendukung'] ?? [] as $item)
+                                                @php
+                                                    $item = (array) $item;
+                                                    $ext = $item['extension_versi_terbaru'];
+                                                    if ($item['extension_versi_terbaru'] == 'docx') {
+                                                        $ext = 'doc';
+                                                    }
+
+                                                    $assetUrl = asset("images/$ext-solid.svg");
+                                                @endphp
+                                                <tr>
+                                                    <td>
+                                                        {{ $loop->iteration }}
+                                                    </td>
+                                                    <td>
+                                                        <div class="util_d-flex util_flex-center-vertical">
+                                                            <img height="25px;" src="{{ $assetUrl }}"
+                                                                alt="">&nbsp;&nbsp;{{ $item['nama_dokumen'] }}.{{ $item['extension_versi_terbaru'] }}
+                                                        </div>
+                                                    </td>
+                                                    <td>{{ Format::formatBytes($item['ukuran']) }}</td>
+                                                    <td>{{ Carbon\Carbon::parse($item['waktu_diubah'])->diffForHumans() }}
+                                                    </td>
+                                                    <td class="cell-action">
+                                                        <div class="dropdown-group"
+                                                            style="display: flex; align-items: center; gap: 4px">
+                                                            @php
+                                                                $encoded = base64_encode(
+                                                                    json_encode([
+                                                                        'id' => $item['id'],
+                                                                    ]),
+                                                                );
+
+                                                                $docUrl = DokumenHelper::generateDocUrl($item['slug']);
+                                                            @endphp
+                                                            <x-core::button leading-icon="eye-solid" variant="outline"
+                                                                size="xs" href="{{ $docUrl }}" />
+                                                            <x-core::button leading-icon="trash-solid" variant="outline"
+                                                                size="xs"
+                                                                href="javascript:deleteRecordDokumenPendukung('{{ $encoded }}')"
+                                                                data-btn-label="Hapus" />
+                                                            <div class="dropdown-group__target">
+                                                                <div class="dropdown-group__toggle">
+                                                                    <a href="#"
+                                                                        class="btn btn_outline btn_xs btn_icon">
+                                                                        <span
+                                                                            class="icon icon-ellipsis-horizontal"></span>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @foreach ($data['raw'] as $key => $value)
+            @php
+                $name = "self[$key]";
+            @endphp
+            <x-core::controls.form :name="$name" :type="'hidden'" :value="$value" />
+        @endforeach
+        <x-core::controls.form :name="'key'" :type="'hidden'" />
+        <x-core::controls.form :name="'act'" :type="'hidden'" />
+
+        <div id="upload-document" class="modal">
+            <div class="modal__overlay" data-dismiss="modal"></div>
+            <div class="modal__wrapper">
+                <div class="modal__header">
+                    <div class="modal__header-wrapper">
+                        <h3 class="modal__title">Unggah Dokumen Pendukung</h3>
+                    </div>
+                    <span class="icon icon-x-mark-mini" data-dismiss="modal"></span>
+                </div>
+
+                <div class="modal__body">
+                    <div class="modal__content-upload">
+                        <div class="form-control">
+                            <div class="upload-draggable">
+                                <div class="upload-draggable__box">
+                                    <input type="file" class="upload-draggable__file-input"
+                                        name="dokumen_pendukung" accept=".pdf,.doc,.docx,.jpg,.png,.xls,.xlsx,.jpeg">
+                                    <label class="upload-draggable__icon"><span
+                                            class="icon icon-cloud-arrow-up"></span></label>
+                                    <h2 class="upload-draggable__title">Klik untuk pilih file</h2>
+                                    <p class="upload-draggable__subtitle">atau seret file ke sini</p>
+                                    <p class="upload-draggable__support">PDF, DOC, DOCX, JPG, Excel, JPEG, dan PNG
+                                        (Max. 10MB)</p>
+                                </div>
+                                <div class="upload-draggable__success">
+                                    Berhasil
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal__footer">
+                    <div class="grid cols-1 cols-sm-2">
+                        <button class="btn btn_outline" type="button" data-dismiss="modal">
+                            Batal
+                        </button>
+                        <button class="btn btn_primary" type="button" id="save-dokumen">Konfirmasi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </x-core::form>
+
+    @pushOnce('end')
+        <x-core::modal.delete id="modal_delete">
+            <x-core::form method="PUT" action="{{ $action }}">
+                <input type="hidden" name="iddelete" value="">
+                @foreach ($data['raw'] as $key => $value)
+                    @php
+                        $name = "self[$key]";
+                    @endphp
+                    <x-core::controls.form :name="$name" :type="'hidden'" :value="$value" />
+                @endforeach
+                <x-core::modal.delete-body>
+                    <x-slot:button type="submit">
+                        Hapus
+                    </x-slot:button>
+                </x-core::modal.delete-body>
+            </x-core::form>
+        </x-core::modal.delete>
+
+        {{--  Modal delete dokumen --}}
+        <x-core::modal.delete id="modal_delete_dokumen" title="Hapus Dokumen Pendukung">
+            <x-core::form method="DELETE" action="{{ $action }}">
+                <input type="hidden" name="iddelete" value="">
+                @foreach ($data['raw'] as $key => $value)
+                    @php
+                        $name = "self[$key]";
+                    @endphp
+                    <x-core::controls.form :name="$name" :type="'hidden'" :value="$value" />
+                @endforeach
+                <x-core::modal.delete-body message="Apakah Anda yakin ingin menghapus dokumen ini?">
+                    <x-slot:button type="submit">
+                        Hapus
+                    </x-slot:button>
+                </x-core::modal.delete-body>
+            </x-core::form>
+        </x-core::modal.delete>
+
+        @if (isset($data['data']['nomor_indikator']))
+            {{-- Modal delete all --}}
+            <x-core::modal.delete id="modal_delete_all" title="Hapus Semua Data">
+                <x-core::form method="DELETE" action="{{ $action }}">
+                    <input type="hidden" name="iddelete" value="">
+                    @foreach ($data['raw'] as $key => $value)
+                        @php
+                            $name = "self[$key]";
+                        @endphp
+                        <x-core::controls.form :name="$name" :type="'hidden'" :value="$value" />
+                    @endforeach
+                    <x-core::modal.delete-body
+                        message="Apakah Anda yakin ingin menghapus semua data pada <b>Tabel {{ $data['data']['nomor_indikator'] . ' ' . $data['data']['nama_indikator_laporan_kinerja'] }}?</b> Karena data yang telah dihapus tidak dapat dikembalikan lagi.">
+                        <x-slot:button type="submit">
+                            Hapus
+                        </x-slot:button>
+                    </x-core::modal.delete-body>
+                </x-core::form>
+            </x-core::modal.delete>
+        @endif
+
+        <x-core::modal.filling-getdata :iskurikulum="$isGetDataKurikulum" id="modal_filling_getdata"
+            message="Apakah Anda yakin tarik data <b>Tabel {{ isset($data['data']['nomor_indikator']) ? $data['data']['nomor_indikator'] . ' ' . $data['data']['nama_indikator_laporan_kinerja'] : 'ini' }}?</b>" />
+        @pushOnce('scripts')
+            <div class="full-page-loader util_d-none">
+                <div class="loader">
+                    <span class="loader__spinner"></span>
+                </div>
+            </div>
+            @if ($isGetData)
+                <script type="module">
+                    List.eventFillingGetData("{{ $action }}");
+                </script>
+            @endif
+        @endPushOnce
+    @endPushOnce
+    @pushOnce('scripts')
+        <script>
+            document.addEventListener('livewire:initialized', () => {
+                Livewire.on('show-loading', () => {
+                    document.querySelector('.full-page-loader').classList.remove('hidden');
+                });
+
+                Livewire.on('hide-loading', () => {
+                    document.querySelector('.full-page-loader').classList.add('hidden');
+                });
+            });
+
+            document.addEventListener('DOMContentLoaded', () => {
+                const modal = document.querySelector('#upload-document');
+                const saveDokumen = document.querySelector('#save-dokumen');
+                const inputDokumen = document.querySelector('input[name="dokumen_pendukung"]');
+                const form = document.querySelector('#form_list');
+
+                saveDokumen.addEventListener('click', () => {
+                    if (inputDokumen.files.length === 0) {
+                        alert('Silakan pilih file terlebih dahulu.');
+                        return;
+                    }
+                    document.querySelector('input[name="act"]').value = 'upload-dokumen-pendukung';
+
+                    form.submit();
+                });
+            });
+
+            @if (!empty($resourceId))
+                function deleteRecordDokumenPendukung(encoded) {
+                    List.deleteRecord(encoded, "{{ Page::detailURL($resourceId) . '/delete-dokumen' }}",
+                        'modal_delete_dokumen');
+                }
+
+                function deleteRecordAll(encoded) {
+                    List.deleteRecord(encoded, "{{ Page::detailURL($resourceId) . '/delete-all' }}", 'modal_delete_all');
+                }
+            @endif
+        </script>
+    @endPushOnce
+
+    @pushOnce('headVendor')
+        <link rel="stylesheet"
+            href="{{ Page::quantumAsset('js/vendors/choices.js-10.2.0/public/assets/styles/choices.min.css') }}">
+        <script src="{{ Page::quantumAsset('js/vendors/choices.js-10.2.0/public/assets/scripts/choices.min.js') }}"></script>
+    @endPushOnce
+</x-core::layouts.outer>

@@ -1,0 +1,24 @@
+@import "../config/variables";
+@import "../config/media";
+
+.tooltip {
+    --bs-tooltip-max-width: 17.5rem;
+    --bs-tooltip-bg: var(--qn-neutral-900);
+    --bs-tooltip-opacity: 1;
+    background: var(--bs-tooltip-bg);
+    border-radius: $size-8;
+    backdrop-filter: blur($size-2);
+    color: var(--qn-white);
+    &-arrow {
+        &::before {
+            border-bottom-color: var(--qn-neutral-900);
+        }
+    }
+    &-inner {
+        border-radius: inherit;
+        padding: $size-8 $size-12;
+        font-size: $size-12;
+        font-weight: 400;
+        line-height: $size-18;
+    }
+}

@@ -1,0 +1,11 @@
+<svg width="28" height="20" viewBox="0 0 28 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0.5" y="0.5" width="27" height="19" rx="3.5" fill="white"/>
+<ellipse cx="13.9463" cy="9.94584" rx="6.53471" ry="6.6125" fill="#6481E7"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M11.0913 10.2149L14.0225 11.9683V5.29318L11.0913 10.2149Z" fill="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M14.0229 5.29318V11.9683L16.9542 10.2149L14.0229 5.29318Z" fill="#C1CCF5"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M14.0227 8.86673L11.0913 10.2148L14.0225 11.9682L16.954 10.215L14.0227 8.86673Z" fill="#8299EC"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M14.0227 8.86673L11.0913 10.2148L14.0225 11.9682L14.0227 8.86673Z" fill="#C1CCF5"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M11.0913 10.7774L14.0225 14.9574V12.5299L11.0913 10.7774Z" fill="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M14.0229 12.5299V14.9576L16.9561 10.7774L14.0229 12.5299Z" fill="#C1CCF5"/>
+<rect x="0.5" y="0.5" width="27" height="19" rx="3.5" stroke="#EEF2F6"/>
+</svg>

@@ -1,0 +1,45 @@
+.usage-card__container {
+    margin-top: auto;
+    padding: 0 1rem 1rem 1rem;
+    z-index: 5;
+
+    .card {
+        border: 1px solid var(--qn-neutral-400);
+
+        .card__body {
+            padding: 0.5rem 0.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+
+            .card__title {
+                font-size: 0.75rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0;
+                line-height: 1.5rem;
+
+                .icon {
+                    font-size: 1rem;
+                }
+            }
+
+            .progress {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+
+                span {
+                    font-size: 0.75rem;
+                    line-height: 1.5rem;
+                }
+            }
+
+            .usage-card__description {
+                font-size: 0.75rem;
+                line-height: 1.5rem;
+            }
+        }
+    }
+}

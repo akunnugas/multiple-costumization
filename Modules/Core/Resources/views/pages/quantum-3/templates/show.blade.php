@@ -1,0 +1,1 @@
+<x-core::quantum-3.layouts.detail :$data :$rawData />

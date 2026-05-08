@@ -1,0 +1,27 @@
+.main > .container {
+    max-width: 36.625rem !important;
+    margin: 0 auto;
+}
+
+.card__footer {
+    button {
+        margin-right: 4px;
+    }
+    
+}
+
+.d-flex {
+    display: flex;
+}
+
+.pull-right{
+    float: right;
+}
+
+.footer-btn  {
+    margin: 12px 0px;
+
+    button {
+        margin-left: 4px;
+    }
+}

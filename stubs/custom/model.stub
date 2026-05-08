@@ -1,0 +1,29 @@
+<?php
+
+namespace Modules\$MODULE$\Models;
+
+use Modules\Core\Extensions\Models\IndonesianModel;
+
+class $CLASS$ extends IndonesianModel
+{
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = '$TABLE$';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<string>
+     */
+    protected $fillable = $FILLABLE$;
+
+    /**
+     * Model field validation.
+     *
+     * @var array<array>
+     */
+    const RULES = $RULES$;
+}

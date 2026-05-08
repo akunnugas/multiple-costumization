@@ -1,23 +1,29 @@
 {
-    "$schema": "https://json.schemastore.org/package.json",
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "vite build",
-        "dev": "vite dev"
+        "dev": "vite",
+        "build": "vite build"
     },
     "devDependencies": {
-        "@tailwindcss/forms": "^0.5.7",
-        "@tailwindcss/typography": "^0.5.10",
-        "autoprefixer": "^10.4.16",
-        "axios": "^1.6.4",
-        "blade-formatter": "^1.42.2",
-        "laravel-vite-plugin": "^2.0",
-        "postcss": "^8.4.32",
-        "tailwindcss": "^3.3.6",
-        "vite": "^7.3"
+        "axios": "^1.1.2",
+        "laravel-vite-plugin": "^0.8.0",
+        "sass": "^1.84.0",
+        "vite": "^4.0.0"
     },
     "dependencies": {
-        "alpinejs": "^3.13.3"
+        "@popperjs/core": "^2.11.8",
+        "@quantum/symbols": "^1.0.0",
+        "@quantum/tokens": "^1.0.6",
+        "@quantum/web": "^3.1.0",
+        "@sentry/browser": "^10.18.0",
+        "@sentry/replay": "^7.116.0",
+        "@sentry/tracing": "^7.120.4",
+        "@ttskch/select2-bootstrap4-theme": "^1.5.2",
+        "air-datepicker": "^3.4.0",
+        "bootstrap": "^5.3.3",
+        "dotenv-expand": "^10.0.0",
+        "jquery": "^3.7.1",
+        "select2": "^4.1.0-rc.0"
     }
 }

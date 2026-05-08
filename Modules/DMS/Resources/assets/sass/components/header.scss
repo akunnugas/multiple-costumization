@@ -1,0 +1,62 @@
+.header {
+    gap: 1rem;
+}
+
+.header__search {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .search-bar {
+        width: 60%;
+        position: relative;
+
+        .search-group:focus-within,
+        .search-group:active {
+            .search-results {
+                display: block;
+            }
+        }
+
+        .search-results {
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            border: 1px solid var(--qn-neutral-200);
+            left: 0;
+            right: 0;
+            display: none;
+
+            .card__body {
+                padding: 0.5rem;
+                flex-grow: 1;
+
+                .loader {
+                    height: 100%;
+                    padding: 2rem 0;
+
+                    &.visible {
+                        display: flex !important;
+                    }
+                }
+
+                .btn {
+                    width: 100%;
+                    justify-content: start;
+                }
+            }
+        }
+    }
+}
+
+.name-field {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    .name-field__folder {
+        font-size: 0.7rem;
+        font-weight: 400;
+        color: var(--qn-neutral-800)
+    }
+}
