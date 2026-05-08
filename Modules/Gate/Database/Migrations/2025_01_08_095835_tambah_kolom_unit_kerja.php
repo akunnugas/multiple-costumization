@@ -24,10 +24,6 @@ return new class extends Migration
             $table->string('gelar_en')->nullable();
             $table->string('gelar_singkat')->nullable();
             $table->string('gelar_singkat_en')->nullable();
-            $table->text('pmb_deskripsi_unit')->nullable();
-            $table->text('pmb_prospek_karir')->nullable();
-            $table->text('pmb_bidang_ilmu')->nullable();
-            $table->string('pmb_biaya_kuliah')->nullable();
         });
     }
 
@@ -49,11 +45,7 @@ return new class extends Migration
                 'gelar',
                 'gelar_en',
                 'gelar_singkat',
-                'gelar_singkat_en',
-                'pmb_deskripsi_unit',
-                'pmb_prospek_karir',
-                'pmb_bidang_ilmu',
-                'pmb_biaya_kuliah'
+                'gelar_singkat_en'
             ]);
         });
     }

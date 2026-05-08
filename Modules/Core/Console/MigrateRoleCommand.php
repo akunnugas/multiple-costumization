@@ -22,9 +22,6 @@ class MigrateRoleCommand extends Command
     protected $description = 'Migrate role data.';
 
     protected $registeredRoles = [
-        \Modules\SPMI\Data\RoleData::class,
-        \Modules\Litabmas\Data\RoleData::class,
-        \Modules\Kerjasama\Data\RoleData::class,
     ];
 
     /**

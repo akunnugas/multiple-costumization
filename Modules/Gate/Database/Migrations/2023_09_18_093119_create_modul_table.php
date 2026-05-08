@@ -41,38 +41,8 @@ return new class extends Migration
         ]);
 
         Modul::create([
-            'nama_modul' => 'SPMI',
-            'kode_modul' => Modul::CODE_SPMI,
-            'apakah_aktif' => true
-        ]);
-
-        Modul::create([
-            'nama_modul' => 'Seleksi Penerimaan Mahasiswa Baru',
-            'kode_modul' => Modul::CODE_PMB,
-            'apakah_aktif' => true
-        ]);
-
-        Modul::create([
-            'nama_modul' => 'Portal PMB',
-            'kode_modul' => Modul::CODE_PMB_ADMISSION,
-            'apakah_aktif' => true
-        ]);
-
-        Modul::create([
-            'nama_modul' => 'Kepegawaian',
-            'kode_modul' => Modul::CODE_KEPEGAWAIAN,
-            'apakah_aktif' => true
-        ]);
-
-        Modul::create([
             'nama_modul' => 'Sistem Manajemen Dokumen',
             'kode_modul' => Modul::CODE_DMS,
-            'apakah_aktif' => true
-        ]);
-
-        Modul::create([
-            'nama_modul' => 'Litabmas',
-            'kode_modul' => Modul::CODE_LITABMAS,
             'apakah_aktif' => true
         ]);
     }

@@ -36,14 +36,8 @@ class Modul extends IndonesianModel
     ];
 
     const CODE_ADMIN = 'gate';
-    const CODE_SPMI = 'spmi';
-    const CODE_PMB = 'pmb';
-    const CODE_PMB_ADMISSION = 'admission';
-    const CODE_KEPEGAWAIAN = 'hr';
     const CODE_DMS = 'dms';
     const CODE_SAMPLE = 'sample';
-    const CODE_KERJASAMA = 'kerjasama';
-    const CODE_LITABMAS = 'litabmas';
 
     public static function getQuantumVersion($modul = null)
     {

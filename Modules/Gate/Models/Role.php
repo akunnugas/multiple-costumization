@@ -32,19 +32,6 @@ class Role extends IndonesianModel
     const ROLE_WAKIL_DEKAN_2 = 'user_wakil_dekan_2';
     const ROLE_WAKIL_DEKAN_3 = 'user_wakil_dekan_3';
 
-    // Role SPMI
-    const ROLE_AUDITEE = 'user_auditee';
-    const ROLE_AUDITOR = 'user_auditor';
-    const ROLE_ADMIN_PENJAMINAN_MUTU = 'admin_penjaminan_mutu';
-    const ROLE_TIM_PENGISI_DATA = 'user_tim_penjaminan_mutu';
-
-    // Role Litabmas
-    const ROLE_LITABMAS_ADMIN_LPPM = 'lm_admin_lppm';
-    const ROLE_LITABMAS_KETUA_LPPM = 'lm_ketua_lppm';
-
-    // Role Kerjasama
-    const ROLE_ADMIN_KERJASAMA = 'admin_kerjasama';
-
     /**
      * The table associated with the model.
      *
@@ -74,12 +61,9 @@ class Role extends IndonesianModel
             self::ROLE_ADMINDMS => self::ROLE_ADMINDMS,
             'admak' => 'admin_akademik',
             'admms' => 'admin_akademik_kemahasiswaan',
-            'akred' => 'admin_akreditasi',
             'adedl' => 'admin_edlink',
-            'oprpg' => 'admin_kepegawaian',
             'adkeu' => 'admin_keuangan_akademik',
             'oprtr' => 'admin_module',
-            'adpmb' => 'admin_pmb',
             'profe' => 'admin_profeeder',
             'adkrl' => 'admin_pusat_karir',
             'adfak' => 'admin_unit_fakultas',
@@ -94,9 +78,7 @@ class Role extends IndonesianModel
             'dosen' => 'user_dosen',
             'kba' => 'user_kabag_akademik',
             'kbau' => 'user_kabag_bau',
-            'kspmi' => 'user_kabag_spmi',
             'ksbau' => 'user_kasubag_bau',
-            'sspmi' => 'user_kasubag_spmi',
             'KA' => 'user_kepala_unit',
             'mhs' => 'user_mahasiswa',
             'mbkmi' => 'user_mahasiswa_kampus_merdeka',
@@ -112,15 +94,6 @@ class Role extends IndonesianModel
             'wrek1' => 'user_wakil_rektor_1',
             'wrek2' => 'user_wakil_rektor_2',
             'wrek3' => 'user_wakil_rektor_3',
-            'ATR' => 'user_auditor',
-            'TPD' => 'user_tim_penjaminan_mutu',
-            'ADMPJ' => 'admin_penjaminan_mutu',
-            'ADT' => self::ROLE_AUDITEE,
-            // litabmas
-            'LALPM' => self::ROLE_LITABMAS_ADMIN_LPPM,
-            'LKLPM' => self::ROLE_LITABMAS_KETUA_LPPM,
-            // kerjasama
-            'ADMKS' => self::ROLE_ADMIN_KERJASAMA
         ];
 
         return empty($role) ? $map : ($map[$role] ?? null);

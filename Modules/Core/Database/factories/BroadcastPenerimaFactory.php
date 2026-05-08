@@ -4,8 +4,6 @@ namespace Modules\Core\Database\factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\Core\Models\Broadcast;
-use Modules\PMB\Models\Pendaftar;
-use Modules\PMB\Models\PeriodePendaftaran;
 
 class BroadcastPenerimaFactory extends Factory
 {
@@ -28,8 +26,6 @@ class BroadcastPenerimaFactory extends Factory
             'apakah_email_terkirim' => fake()->boolean(),
             'apakah_whatsapp_terkirim' => fake()->boolean(),
             'apakah_sms_terkirim' => fake()->boolean(),
-            'id_pendaftar' => Pendaftar::factory()->create()->id,
-            'id_periode_pendaftaran' => PeriodePendaftaran::factory()->create()->id,
         ];
     }
 }

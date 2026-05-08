@@ -29,7 +29,6 @@ return new class extends Migration
             $table->boolean('apakah_akademik');
             $table->boolean('apakah_satker');
             $table->boolean('apakah_aktif')->default(true);
-            $table->boolean('apakah_aktif_pmb')->default(true);
             $table->boolean('apakah_data_default')->default(false);
             $table->string('akreditasi')->nullable()->comment('Akreditasi');
             $table->foreignIdTo(LembagaAkreditasi::class, nullable: true);

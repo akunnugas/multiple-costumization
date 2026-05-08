@@ -39,8 +39,6 @@ return new class extends Migration
             $table->boolean('apakah_email_terkirim')->default(false);
             $table->boolean('apakah_whatsapp_terkirim')->default(false);
             $table->boolean('apakah_sms_terkirim')->default(false);
-            $table->foreignIdTo(Pendaftar::class, nullable: true);
-            $table->foreignIdTo(PeriodePendaftaran::class, nullable: true);
             $table->logs(true);
         });
     }
@@ -53,6 +51,10 @@ return new class extends Migration
     public function down()
     {
         SevimaSchema::dropIfExists('core.broadcast_penerima');
+        SevimaSchema::dropIfExists('core.broadcast');
+    }
+};
+);
         SevimaSchema::dropIfExists('core.broadcast');
     }
 };
