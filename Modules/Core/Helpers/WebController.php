@@ -621,33 +621,6 @@ class WebController
     }
 
     /**
-     * @param mixed $service
-     * @param string $customMethod
-     * @return \Illuminate\Contracts\View\View
-     */
-    public static function sync(mixed $service, string $customMethod = 'syncFromSiakadv1')
-    {
-        list($err, $msg) = $service->{$customMethod}();
-        $realErrMsg = $msg;
-
-        if ($err) {
-            if (str_contains($msg, 'SQLSTATE')) {
-                $msg = 'Terjadi kesalahan pada server.';
-
-                // Log error
-                Log::error($realErrMsg);
-
-                // Capture sentry
-                \Sentry\captureException(new \Exception($realErrMsg));
-            }
-
-            return back()->withError($msg);
-        }
-
-        return back()->withSuccess($msg);
-    }
-
-    /**
      * Export Resource
      *
      * @param mixed $service

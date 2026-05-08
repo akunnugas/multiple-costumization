@@ -5,7 +5,6 @@ namespace Modules\Core\Services;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Modules\Core\Helpers\ManagementService;
-use Modules\Core\Helpers\SyncSiakad;
 use Modules\Core\Models\PerguruanTinggi;
 
 class PerguruanTinggiManagementService
@@ -102,36 +101,5 @@ class PerguruanTinggiManagementService
     public function destroySome($ids)
     {
         return ManagementService::create($this->model)->destroySome($ids);
-    }
-
-    /**
-     * Sync data from SIAKAD V1 to SIAKAD V2
-     *
-     * return array
-     */
-    public function syncUniversitasFromSiakadV1($limit = null)
-    {
-        $siakadV1Connection = DB::connection('siakadv1');
-        $sql = "select iduniversitas, namauniversitas, alamat, telepon from ref.ms_universitas " . ($limit ? "limit $limit" : '');
-
-        try {
-            $result = $siakadV1Connection->select($sql);
-            $universitas = json_decode(json_encode($result), true);
-        } catch (Exception $e) {
-            return [true, $e->getMessage()];
-        }
-
-        // mapping column
-        $pk = ['iduniversitas'];
-        $mapping = [
-            'iduniversitas' => ['column' => 'kode_pt', 'notnull' => true],
-            'namauniversitas' => ['column' => 'nama_pt', 'notnull' => true],
-            'alamat' => ['column' => 'alamat_pt'],
-            'telepon' => ['column' => 'telepon_pt'],
-        ];
-
-        list($err, $msg) = SyncSiakad::sync($mapping, $universitas, new PerguruanTinggi, $pk);
-
-        return [$err, $msg];
     }
 }

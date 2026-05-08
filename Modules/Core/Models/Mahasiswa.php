@@ -101,36 +101,4 @@ class Mahasiswa extends IndonesianModel
 
         return $mapping;
     }
-
-    public static function searchOptionV1($searchTerm = '', $idunit = null, $limit = 0, $exceptNimMhs = [])
-    {
-        $query = "select m.nim, m.nama, m.idunit as kode_unit from akademik.ak_mahasiswa m where m.idstatusmhs = 'A'";
-        
-        if (!empty($idunit)) {
-            $query .= "and m.idunit = '$idunit'";
-        }
-
-        if ($searchTerm !== '') {
-            $query .= " and (m.nim ilike '%$searchTerm%' or m.nama ilike '%$searchTerm%')";
-        }
-
-        if (!empty($exceptNimMhs)) {
-            $query .= " and m.nim not in ('" . implode("','", $exceptNimMhs) . "')";
-        }
-
-        if ($limit > 0) {
-            $query .= " limit $limit";
-        }
-
-        $siakadV1Connection = DB::connection('siakadv1');
-        $result = $siakadV1Connection->select($query);
-        $result = json_decode(json_encode($result), true);
-
-        $data = [];
-        foreach ($result as $value) {
-            $data[$value['nim']] = $value['nim'] . ' - ' . $value['nama'];
-        }
-
-        return $data;
-    }
 }

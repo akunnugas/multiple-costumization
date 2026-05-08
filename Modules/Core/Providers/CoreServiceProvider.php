@@ -34,22 +34,13 @@ class CoreServiceProvider extends ServiceProvider
         $this->commands([
             \Modules\Core\Console\FactoryMakeCommand::class,
             \Modules\Core\Console\LangMakeCommand::class,
-            \Modules\Core\Console\MigrateCommand::class,
             \Modules\Core\Console\ModelMakeCommand::class,
-            \Modules\Core\Console\SyncKepegawaianCommand::class,
             \Modules\Core\Console\ModelTestMakeCommand::class,
             \Modules\Core\Console\ModelTestFixtureMakeCommand::class,
             \Modules\Core\Console\BasicControllerMakeCommand::class,
             \Modules\Core\Console\ServiceMakeCommand::class,
             \Modules\Core\Console\ServiceTestMakeCommand::class,
-            \Modules\Core\Console\SyncUnitKerjaCommand::class,
             \Modules\Core\Console\FeatureMakeCommand::class,
-            \Modules\Core\Console\SyncWilayahCommand::class,
-
-            // migrate data
-            \Modules\Core\Console\MigrateMahasiswaFromSiakadV1::class,
-            \Modules\Core\Console\MigrateUniversitasFromSiakadV1::class,
-            \Modules\Core\Console\MigrateRoleCommand::class
         ]);
     }
 
@@ -68,44 +59,6 @@ class CoreServiceProvider extends ServiceProvider
      */
     protected function registerCommandSchedules(): void
     {
-        $this->app->booted(function () {
-            $schedule = $this->app->make(Schedule::class);
-
-            // wilayah (negara, provinsi, kota/kabupaten, kecamatan)
-            // $schedule->command('app:sync-wilayah')
-            //     ->name('Sync Data Wilayah')
-            //     ->runInBackground()
-            //     ->before(function () {
-            //         Log::channel('scheduler')->info('Core - Sync data wilayah started at ' . now()->toDateTimeString());
-            //     })
-            //     ->after(function () {
-            //         Log::channel('scheduler')->info('Core - Sync data wilayah finished at ' . now()->toDateTimeString());
-            //     })
-            //     ->dailyAt('01:00');
-
-
-            $schedule->command('app:sync-kepegawaian')
-                ->name('Sync Data Kepegawaian')
-                ->runInBackground()
-                ->before(function () {
-                    Log::channel('scheduler')->info('Core - Sync data pegawai started at ' . now()->toDateTimeString());
-                })
-                ->after(function () {
-                    Log::channel('scheduler')->info('Core - Sync data pegawai finished at ' . now()->toDateTimeString());
-                })
-                ->dailyAt('01:00');
-
-            $schedule->command('app:sync-unit-kerja')
-                ->name('Sync Data Unit Kerja')
-                ->runInBackground()
-                ->before(function () {
-                    Log::channel('scheduler')->info('Core - Sync data unit kerja started at ' . now()->toDateTimeString());
-                })
-                ->after(function () {
-                    Log::channel('scheduler')->info('Core - Sync data unit kerja finished at ' . now()->toDateTimeString());
-                })
-                ->dailyAt('01:00');
-        });
     }
 
     /**

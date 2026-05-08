@@ -29,9 +29,6 @@ return new class extends Migration
 
         // Clear user role
         UserRole::truncate();
-
-        // Sinkronisasi ulang
-        (new UnitKerjaManagementService)->syncFromSiakadv1();
     }
 
     /**

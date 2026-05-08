@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Modules\Core\Helpers\Error;
 use Modules\Core\Helpers\Pagination;
-use Modules\Core\Helpers\SyncSiakad;
 use Modules\Core\Models\Shared\UserInternal;
 use Modules\Gate\Models\User;
 use Modules\Gate\Models\UserRole;
@@ -169,65 +168,5 @@ class UserManagementService
         }
 
         return $userRole;
-    }
-
-    /**
-     * Get data from SIAKAD V1 [gate.sc_users]
-     *
-     * @return array
-     */
-    public function getFromSiakadV1()
-    {
-        $connection = 'siakadv1';
-        $query = "select userid, idpegawai, userdesc, username, email from gate.sc_user";
-
-        $result = DB::connection($connection)->select($query);
-        $result = json_decode(json_encode($result), true);
-
-        return $result;
-    }
-
-    /**
-     * Sync data from SIAKAD V1 to SIAKAD V2
-     *
-     * $param array $data (Siakad v1 data)
-     * return array
-     */
-    public function syncFromSiakadv1($dataSiakad = [], $isHr = false)
-    {
-        if (empty($dataSiakad)) {
-            $dataSiakad = $this->getFromSiakadV1();
-        }
-
-        $mapping = [];
-        $mapping[$isHr ? 'nama' : 'username'] = ['column' => 'nama_user'];
-        $mapping['email'] = ['column' => 'email_user', 'default_column' => 'emailkampus', 'lowercase' => true];
-
-        // unique column
-        $pk = [];
-        $pk = [($isHr ? 'idpegawai' : 'userid')];
-
-        list($err, $msg) = SyncSiakad::sync($mapping, $dataSiakad, User::class, $pk);
-
-        return [$err, $msg];
-    }
-
-    /**
-     * Sync data mahasiswa dari SIAKAD V1 ke table gate.users SIAKAD V2
-     *
-     * return array
-     */
-    public function syncUserMahasiswaFromSiakadV1($dataMahasiswa)
-    {
-        $mapping = [];
-        $mapping['nama'] = ['column' => 'nama_user'];
-        $mapping['email'] = ['column' => 'email_user', 'lowercase' => true, 'notnull' => true];
-        $mapping['telepon'] = ['column' => 'telepon_user'];
-
-        $pk = ['nim'];
-
-        list($err, $msg) = SyncSiakad::sync($mapping, $dataMahasiswa, User::class, $pk);
-
-        return [$err, $msg];
     }
 }

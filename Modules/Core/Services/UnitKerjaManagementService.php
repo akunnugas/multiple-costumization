@@ -7,20 +7,11 @@ use Illuminate\Support\Facades\DB;
 use Modules\Core\Helpers\Error;
 use Modules\Core\Helpers\ManagementService;
 use Modules\Core\Helpers\Pagination;
-use Modules\Core\Helpers\SyncSiakad;
-use Modules\Core\Jobs\ProcessSyncIndikatorBobot;
 use Modules\Core\Models\Biodata;
 use Modules\Core\Models\JenjangPendidikan;
 use Modules\Core\Models\LembagaAkreditasi;
 use Modules\Core\Models\Pegawai;
-use Modules\Core\Models\Shared\KlienConfig;
 use Modules\Core\Models\UnitKerja;
-use Modules\SPMI\Models\AuditPeriode;
-use Modules\SPMI\Models\IndikatorBobot;
-use Modules\SPMI\Models\JadwalAudit;
-use Modules\SPMI\Models\JadwalAuditUnit;
-use Modules\SPMI\Models\PenilaianPanduan;
-use Modules\SPMI\Models\SuratTugasAuditorPegawai;
 
 class UnitKerjaManagementService
 {
@@ -246,9 +237,6 @@ class UnitKerjaManagementService
 
         $create = $this->model->create($data);
 
-        $kode_klien = KlienConfig::getKodeKlien();
-        ProcessSyncIndikatorBobot::dispatch($kode_klien, [$create->id], null, null);
-
         return $create;
     }
 
@@ -357,153 +345,6 @@ class UnitKerjaManagementService
         return $result;
     }
 
-    /**
-     * Get data from SIAKAD V1 [ref.ms_unit]
-     *
-     * @return array
-     */
-    public function getFromSiakadV1()
-    {
-        $connection = 'siakadv1';
-        $query = "select
-            coalesce(u.idunit, uhr.idsatker) idunit,
-            coalesce(u.idsatker, uhr.idsatker) idsatker,
-            coalesce(u.namaunit, uhr.namasatker) namaunit,
-            u.lembagaakreditasi,
-            u.kebutuhanlulusan,
-            u.kelompokprodi,
-            coalesce(u.parentunit, uhr.parentsatker) parentunit,
-            coalesce(u.jenisunit, '" . UnitKerja::UNIT_NON_PRODI . "') jenisunit,
-            coalesce(u.levelunit, uhr.level) levelunit,
-            coalesce(u.infoleft, uhr.infoleft) infoleft,
-            coalesce(u.inforight, uhr.inforight) inforight,
-            coalesce(u.idjenjang, uhr.idjenjang) idjenjang,
-            coalesce(u.isaktif, uhr.isaktif) isaktif,
-            u.isaktifspmb,
-            p.tanggalawal,
-            u.nipketua
-        from gate.sc_unit uhr
-        left join ref.ms_unit u using(idsatker)
-        left join ref.ms_periode p on p.idperiode = u.idperiodeberdiri
-        order by infoleft asc";
-
-        $result = DB::connection($connection)->select($query);
-        $result = json_decode(json_encode($result), true);
-
-        return $result;
-    }
-
-    /**
-     * Sync data from SIAKAD V1 to SIAKAD V2
-     *
-     * return array
-     */
-    public function syncFromSiakadv1()
-    {
-        // run degree sync first
-        $degreeService = new JenjangPendidikanManagementService();
-        list($err, $msg) = $degreeService->syncFromSiakadv1();
-
-        if ($err) {
-            return [$err, $msg];
-        }
-
-        $dataSiakad = $this->getFromSiakadV1();
-
-        // options
-        $optDegree = JenjangPendidikan::pluck('kode_jenjang', 'id')->toArray();
-
-        $employeeModel = new Pegawai;
-        $optEmployee = $employeeModel->pluck('nip', 'id')->toArray();
-        $lembagaAkreditasi = LembagaAkreditasi::whereIn('nama_singkat_lembaga', array_values(LembagaAkreditasi::LEMBAGA_AKREDITASI))
-            ->pluck('id', 'nama_singkat_lembaga')
-            ->toArray();
-
-        $optLembagaAkreditasi = [];
-        foreach (LembagaAkreditasi::LEMBAGA_AKREDITASI as $key => $val) {
-            if (isset($lembagaAkreditasi[$val])) {
-                $optLembagaAkreditasi[$key] = $lembagaAkreditasi[$val];
-            }
-        }
-
-        $optKebutuhanLulusan = UnitKerja::KEBUTUHAN_LULUSAN_MAP_FROM_SIAKAD;
-
-        $mapDefaultDataSiakad = [];
-        foreach ($dataSiakad as $row) {
-
-            $university = array_filter($dataSiakad, function ($item) use ($row) {
-                return $item['jenisunit'] == UnitKerja::UNIVERSITY;
-            });
-            $university = !empty($university) ? reset($university) : null;
-
-            if ($row['jenisunit'] === UnitKerja::UNIT_NON_PRODI) {
-                $row['idjenjang'] = 'UNA';
-                $id_units = array_filter($dataSiakad, function ($item) use ($row) {
-                    return $item['idsatker'] == $row['parentunit'];
-                });
-                if (!empty($id_units)) {
-                    $id_units = reset($id_units);
-                    $row['parentunit'] = $id_units['idunit'];
-                }
-            }
-
-            $parent = array_filter($dataSiakad, function ($item) use ($row) {
-                return $item['idunit'] == $row['parentunit'];
-            });
-            $parent = !empty($parent) ? reset($parent) : null;
-
-            if ($parent && $university && in_array($parent['jenisunit'], [UnitKerja::STUDY_PROGRAM, UnitKerja::UNIT_NON_PRODI])) {
-                $row['parentunit'] = $university['idunit'];
-            }
-
-            $row['apakah_data_default'] = true;
-            $mapDefaultDataSiakad[] = $row;
-        }
-
-        $mapping = [];
-        $mapping['idunit'] = ['column' => 'kode_unit'];
-        $mapping['idsatker'] = ['column' => 'ref_key_satker'];
-        $mapping['namaunit'] = ['column' => 'nama_unit'];
-        $mapping['lembagaakreditasi'] = ['column' => 'id_lembaga_akreditasi', 'options' => $optLembagaAkreditasi];
-        $mapping['kebutuhanlulusan'] = ['column' => 'kebutuhan_lulusan', 'options' => $optKebutuhanLulusan];
-        $mapping['kelompokprodi'] = ['column' => 'kelompok_prodi'];
-        $mapping['parentunit'] = ['column' => 'id_parent', 'default' => null, 'pkv1' => 'kode_unit', 'pkv2' => 'id'];
-        $mapping['jenisunit'] = ['column' => 'jenis_unit'];
-        $mapping['levelunit'] = ['column' => 'info_level'];
-        $mapping['infoleft'] = ['column' => 'info_left'];
-        $mapping['inforight'] = ['column' => 'info_right', 'default' => 0];
-        $mapping['idjenjang'] = ['column' => 'id_jenjang_pendidikan', 'options' => $optDegree];
-        $mapping['isaktif'] = ['column' => 'apakah_aktif', 'default' => false];
-        $mapping['isaktifspmb'] = ['column' => 'apakah_aktif_pmb', 'default' => false];
-        $mapping['apakah_akademik'] = ['column' => 'apakah_akademik', 'default' => true];
-        $mapping['apakah_satker'] = ['column' => 'apakah_satker', 'default' => false];
-        $mapping['alamat'] = ['column' => 'alamat'];
-        $mapping['tanggalawal'] = ['column' => 'tanggal_berdiri', 'default' => null];
-        $mapping['apakah_data_default'] = ['column' => 'apakah_data_default', 'default' => true];
-
-        if (!empty($optEmployee))
-            $mapping['nipketua'] = ['column' => 'id_pimpinan', 'options' => $optEmployee, 'notnull' => false];
-
-        $pk = ['idunit'];
-
-        list($err, $msg) = SyncSiakad::sync(
-            mappings: $mapping,
-            records: $mapDefaultDataSiakad,
-            model: $this->model,
-            pk: $pk,
-            otherRefKeys: ['jenis_unit'],
-        );
-
-        $kode_klien = KlienConfig::getKodeKlien();
-        ProcessSyncIndikatorBobot::dispatch($kode_klien);
-
-        if (!$err) {
-            return [$err, 'Berhasil Tarik Data'];
-        }
-
-        return [$err, $msg];
-    }
-
     public function getUnitAncestors(int $startUnitId)
     {
         $tableName = (new UnitKerja)->getTable();
@@ -540,8 +381,6 @@ class UnitKerjaManagementService
 
     public function checkReference($id)
     {
-        $isReferenceJadwalAudit = JadwalAuditUnit::where('id_unit', $id)->exists();
-        $isReferenceSuratTugas = SuratTugasAuditorPegawai::where('id_unit', $id)->exists();
-        return $isReferenceJadwalAudit || $isReferenceSuratTugas;
+        return false;
     }
 }

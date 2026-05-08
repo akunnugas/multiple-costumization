@@ -95,14 +95,6 @@ class AuthenticationService
             return new Error(code: $user->code ?? 'error_create_user', callback: $callback);
         }
 
-        // sync userrole dari siakad 1 jika tidak ada role
-        if (!empty($activeModul)) {
-            [$err, $message] = (new RoleManagementService)->syncUserRoleFromSiakadV1($user['user'], $activeModul);
-            if ($err) {
-                return new Error(code: 'error_sync', message: $message, callback: $callback);
-            }
-        }
-
         if (Error::isError($user)) {
             return new Error(code: $user->code ?? 'user_not_found', callback: $callback);
         }
@@ -299,7 +291,7 @@ class AuthenticationService
     }
 
     /**
-     * Checking Organization or sync organization from siakadv1.
+     * Checking Organization.
      *
      * @param string|null $kodeUnit
      * @return string
@@ -307,24 +299,12 @@ class AuthenticationService
     public static function checkingOrganization(string $kodeUnit = null)
     {
         $kodeUnitUser = self::getActiveUnit($kodeUnit);
-        if (empty($kodeUnitUser)) {
-            // sync v1 ke v2
-            $syncV1 = new UnitKerjaManagementService;
-            // sync organization
-            list($err, $msg) = $syncV1->syncFromSiakadv1();
-
-            if ($err) {
-                return new Error(code: 'error_sync', message: $msg);
-            }
-
-            $kodeUnitUser = self::getActiveUnit($kodeUnit);
-        }
 
         return $kodeUnitUser;
     }
 
     /**
-     * Checking Role Internal / External. or sync role from siakadv1.
+     * Checking Role Internal / External.
      *
      * string $token
      */
@@ -332,16 +312,6 @@ class AuthenticationService
     {
         $roleUser = null;
         list($roleUser, $typeRole) = self::getRoleAndType($role, $isV2);
-        if (empty($roleUser)) {
-            // sync v1 ke v2
-            $syncV1 = new RoleManagementService;
-
-            // sync external role
-            $syncV1->syncFromSiakadv1();
-
-            // get role
-            list($roleUser, $typeRole) = self::getRoleAndType($role, $isV2);
-        }
 
         if (!empty($roleUser) && $typeRole == 'external') {
             // cek permission role external
@@ -369,7 +339,7 @@ class AuthenticationService
     }
 
     /**
-     * Tambah user dari siAkad.
+     * Tambah user dari sso.
      *
      * @param mixed $user
      * @param array $data
@@ -475,15 +445,6 @@ class AuthenticationService
                 return new Error(code: 'error_create_user');
             }
         }
-
-        // Tidak dipakai karena sudah dilakukan sync sebelum user login
-        // tambah biodata jika tidak ada
-        // Biodata::firstOrCreate([
-        //     'id_user' => $user->id,
-        //     'nama' => $data['name'],
-        //     'email' => $data['email'],
-        //     'telepon' => $data['phone'] ?? null,
-        // ]);
 
         return ['user' => $user, 'id_role' => $roleId, 'id_unit' => $organizationId];
     }

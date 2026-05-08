@@ -29,10 +29,6 @@ return new class extends Migration
             $table->uniqueIndex('kode_role', true);
         });
 
-        // syncronize with roles on v1
-        $roles = new RoleManagementService;
-        $roles->syncFromSiakadv1();
-
         // create or update role
         Role::updateOrCreate(
             ['kode_role' => Role::ROLE_ADMINPT],

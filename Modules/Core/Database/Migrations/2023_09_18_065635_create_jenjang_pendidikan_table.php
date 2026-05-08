@@ -35,9 +35,6 @@ return new class extends Migration
         SevimaSchema::table('core.jenjang_pendidikan', function (SevimaBlueprint $table) {
             $table->uniqueIndex('kode_jenjang', true);
         });
-
-        $service = new JenjangPendidikanManagementService;
-        $service->syncFromSiakadv1();
     }
 
     /**

@@ -9,8 +9,6 @@
     if (!empty($user->kode_modul)) {
         $roles = $user->modul[$user->kode_modul]['role'];
     }
-
-    $urlMenuSiakad = $client['url_siakad_menu'] ?? env('URL_SIAKADV1_MENU', '#');
 @endphp
 
 

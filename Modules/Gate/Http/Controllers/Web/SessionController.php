@@ -111,9 +111,7 @@ class SessionController extends Controller
                 return redirect()->away($auth->callback . '?error=' . $auth->code);
             }
 
-            $siakadV1Url = request()->client['url_siakad'] ?? env('URL_SIAKADV1');
-            $urlV1 = $siakadV1Url . '/gate';
-            return redirect()->away($urlV1);
+            return redirect()->to('/');
         }
 
         // FIXME: intended dipisah per modul
@@ -141,12 +139,7 @@ class SessionController extends Controller
             return redirect()->route('login');
         }
 
-        // NOTE: Untuk sementara langsung redirect endpoint logout dari siakad v1
-        $siakadV1Url = request()->client['url_siakad'] ?? env('URL_SIAKADV1');
-        $urlV1 = $siakadV1Url;
-        $url = $urlV1 . '/gate/logout';
-
-        return redirect()->away($url);
+        return redirect()->route('login');
     }
 
     /**

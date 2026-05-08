@@ -28,9 +28,7 @@ class EksternalRoleRequiredBiodata
                 return redirect()->away($callback . '?error=' . $errorCode);
             }
 
-            $siakadV1Url = request()->client['url_siakad'] ?? env('URL_SIAKADV1');
-            $urlV1 = $siakadV1Url . '/gate';
-            return redirect()->away($urlV1);
+            return redirect()->to('/');
         }
 
         return $next($request);

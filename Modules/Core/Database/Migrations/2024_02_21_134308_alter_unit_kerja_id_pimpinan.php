@@ -17,11 +17,6 @@ return new class extends Migration
             $table->unsignedBigInteger('id_pimpinan')->nullable();
             $table->foreign('id_pimpinan')->references('id')->on('core.pegawai');
         });
-
-        if (env("DB_SIAKADV1_USERNAME") && env("DB_SIAKADV1_PASSWORD")) {
-            $service = new UnitKerjaManagementService;
-            $service->syncFromSiakadv1();
-        }
     }
 
     /**

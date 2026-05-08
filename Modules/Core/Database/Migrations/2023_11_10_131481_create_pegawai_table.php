@@ -32,11 +32,6 @@ return new class extends Migration
         SevimaSchema::table('core.pegawai', function (SevimaBlueprint $table) {
             $table->uniqueIndex('nip', true);
         });
-
-        if (env("DB_SIAKADV1_SYNC", false)) {
-            $service = new PegawaiManagementService;
-            $service->syncFromSiakadv1();
-        }
     }
 
     /**

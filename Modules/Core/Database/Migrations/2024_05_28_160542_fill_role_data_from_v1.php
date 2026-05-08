@@ -14,8 +14,6 @@ return new class extends Migration
      */
     public function up()
     {
-        $role = new RoleManagementService;
-        $role->syncInternalFromSiakadv1();
     }
 
     /**
